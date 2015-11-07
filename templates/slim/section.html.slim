@@ -1,0 +1,4 @@
+section class=role
+  - unless (_title = title)[0..1].rstrip == '!' || (option? :conceal)
+    h2=title
+  =content

@@ -1,0 +1,6 @@
+ul class=[@style, role, ('step' if (option? :step) && !(has_role? 'step'))]
+  - items.each do |item|
+    li
+      =item.text
+      - if item.blocks?
+        =item.content
