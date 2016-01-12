@@ -1,0 +1,21 @@
+= {project-name}
+Dan Allen <https://github.com/mojavelinux>
+// Aliases:
+:project-name: asciidoctor-bespoke
+// URIs:
+:uri-asciidoc: http://asciidoc.org
+:uri-asciidoctor: http://asciidoctor.org
+:uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
+
+A converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML part of a {uri-bespoke}[Bespoke.js] presentation from an {uri-asciidoc}[AsciiDoc] source file.
+
+== Authors
+
+{project-name} was written by {email}[{author}].
+
+== Copyright
+
+Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project.
+Free use of this software is granted under the terms of the MIT License.
+
+See the link:LICENSE.adoc[LICENSE] file for details.
