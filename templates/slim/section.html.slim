@@ -1,4 +1,6 @@
+- _title = title
 section class=role
-  - unless (_title = title)[0..1].rstrip == '!' || (option? :conceal)
-    h2=title
-  =content
+  - unless (_title.start_with? '!') || (option? :conceal)
+    h2=_title
+  - unless (_content = content).empty?
+    =_content

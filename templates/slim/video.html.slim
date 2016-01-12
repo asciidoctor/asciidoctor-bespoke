@@ -1,0 +1,6 @@
+figure.video
+  video(class=role src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
+      poster=((poster = local_attr :poster).nil_or_empty? ? nil : (media_uri poster)) autoplay=(option? :autoplay)
+      controls=(true unless option? :nocontrols) loop=(option? :loop))
+  - if title?
+    figcaption=title

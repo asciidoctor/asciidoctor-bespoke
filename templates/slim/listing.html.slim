@@ -1,0 +1,7 @@
+- if style == 'source'
+  - if (language = local_attr :language)
+    pre.source: code data-lang=language =content
+  - else
+    pre.listing=content
+- else
+  include literal.html
