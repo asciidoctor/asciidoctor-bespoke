@@ -11,7 +11,7 @@ module Bespoke
     register_for 'bespoke'
 
     def initialize backend, opts = {}
-      template_dirs = [(::File.expand_path '../../../templates/slim', __FILE__)]
+      template_dirs = [(::File.expand_path '../../../templates', __FILE__)]
       if (extra_template_dirs = opts.delete :template_dirs)
         template_dirs.concat extra_template_dirs
       end
