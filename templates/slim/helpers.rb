@@ -9,7 +9,9 @@ module Slim::Helpers
     attr? name, default_val, false
   end
 
-  def convert_content
+  # Retrieve the converted content, wrap it in a paragraph element if
+  # the content_model is :simple and return the result.
+  def prepare_content
     content_model == :simple ? %(<p>#{content}</p>) : content
   end
 

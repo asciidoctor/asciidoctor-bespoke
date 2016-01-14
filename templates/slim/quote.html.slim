@@ -1,13 +1,13 @@
-- attribution_, citetitle_, title_ = (local_attr? :attribution), (local_attr? :citetitle), title?
+- _has_attribution, _has_citetitle, _has_title = (local_attr? :attribution), (local_attr? :citetitle), title?
 figure.quote
-  blockquote=convert_content
-  - if attribution_ || citetitle_ || title_
+  blockquote=prepare_content
+  - if _has_attribution || _has_citetitle || _has_title
     figcaption
-      - if attribution_
+      - if _has_attribution
         =local_attr :attribution
-        =spacer if citetitle_ || title_
-      - if citetitle_
+        =spacer if _has_citetitle || _has_title
+      - if _has_citetitle
         cite=local_attr :citetitle
-        =spacer if title_
-      - if title_
+        =spacer if _has_title
+      - if _has_title
         span.context=title
