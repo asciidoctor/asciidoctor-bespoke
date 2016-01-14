@@ -1,6 +1,17 @@
 - _title = title
-section class=role
+/ QUESTION how should we handle ids for concealed sections?
+section id=id class=role
   - unless (_title.start_with? '!') || (option? :conceal)
-    h2=_title
+    / QUESTION do we have the right combinations here?
+    / QUESTION should split be implied when (_title.include? '&#8203; '); or triggered by split (not fit)
+    - if (fit_ = option? :fit) || (option? :split)
+      - if (_title.include? '&#8203; ')
+        h2 class=[('fit' if fit_), ('step' if option? :step), ('charred' if option? :charred)]
+          - (_title.split '&#8203; ').each do |_line|
+            span.line=_line
+      - else
+        h2 class=('fit' if fit_) : span.line=_title
+    - else
+      h2=_title
   - unless (_content = content).empty?
     =_content

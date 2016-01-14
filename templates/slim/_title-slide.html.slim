@@ -1,0 +1,11 @@
+- _title = header.title
+// QUESTION should the role be title-slide or just title?
+section class=['title-slide', role]
+  - if (attr? 'title-slide-opts') && (attr 'title-slide-opts').split(',').include?('split')
+    - if (_title.include? '&#8203; ')
+      - (_title.split '&#8203; ').each do |_line|
+        span.line=_line
+    - else
+      h1 : span.line=_title
+  - else
+    h1=_title

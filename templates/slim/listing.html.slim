@@ -1,6 +1,6 @@
 - if style == 'source'
-  - if (language = local_attr :language)
-    pre.source: code data-lang=language =content
+  - if (_language = local_attr :language)
+    pre.source : code data-lang=_language =content
   - else
     pre.listing=content
 - else

@@ -1,4 +1,4 @@
-figure.image class=role
+figure.image class=[role, ('toggle' if option? :toggle)]
   - if (target = local_attr :target).include? '#'
     - (target.split '#').each do |_target|
       img src=(image_uri _target) alt=(local_attr :alt) width=(local_attr :width) height=(local_attr :height)
