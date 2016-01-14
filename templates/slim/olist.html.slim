@@ -1,0 +1,7 @@
+/ TODO block title
+ol id=id class=[style, role, ('fit' if option? :fit), ('step' if option? :step), ('charred' if option? :charred)]
+  - items.each do |_item|
+    li class=('line' if option? :fit)
+      span.principal=_item.text
+      - if _item.blocks?
+        =_item.content
