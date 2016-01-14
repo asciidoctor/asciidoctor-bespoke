@@ -12,7 +12,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     link rel='stylesheet' type='text/css' href='build/build.css'
   body id=id
     article.deck
-      - unless notitle || !has_header?
+      - if has_header? && !noheader
         include _title-slide.html
       =content
     script src='build/build.js'
