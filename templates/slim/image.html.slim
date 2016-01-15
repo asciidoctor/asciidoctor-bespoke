@@ -1,6 +1,6 @@
 - return '' if attributes.delete 'skip-option'
-/ QUESTION flux or alternate instead of toggle?
-figure.image class=[role, ('toggle' if option? :toggle)]
+/ QUESTION default image role?
+figure.image class=[role, ('flux' if option? :flux)]
   - if (target = local_attr :target).include? '#'
     - (target.split '#').each do |_target|
       img src=(image_uri _target) alt=(local_attr :alt) width=(local_attr :width) height=(local_attr :height)
