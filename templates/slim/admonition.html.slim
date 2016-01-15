@@ -1,5 +1,5 @@
-- if has_role? 'prompt'
+- if has_role? 'cue'
   include _speaker-notes.html
 - else
-  / HACK to delegate to fallback converter
+  / HACK delegate to fallback converter
   =converter.converters[-1].convert self
