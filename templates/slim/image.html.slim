@@ -1,3 +1,5 @@
+- return '' if attributes.delete 'skip-option'
+/ QUESTION flux or alternate instead of toggle?
 figure.image class=[role, ('toggle' if option? :toggle)]
   - if (target = local_attr :target).include? '#'
     - (target.split '#').each do |_target|

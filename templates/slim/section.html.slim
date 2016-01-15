@@ -1,12 +1,28 @@
-- _title = title
 / QUESTION how should we handle ids for concealed sections?
-section id=id class=role
+/ TODO pull out speaker notes to be adjacent to .content
+- _title = title
+- _roles = roles
+/ TODO alternate terms for "canvas" - pane, slide, panel
+/ TODO also implement "surface" (alternate terms for "surface" - backdrop, screen)
+/ QUESTION should we allow the image to be anywhere in the section content?
+- if blocks? && (_block_1 = blocks[0]).context == :image && ((_block_1_roles = _block_1.roles).include? 'canvas')
+  - _has_image = true
+  - _bg_size = (_block_1_roles & ['cover', 'contain'])[0] || 'cover'
+  - _style = %(background-image: url(#{image_uri(_block_1.attr :target)}); background-size: #{_bg_size})
+  - _block_1.attributes['skip-option'] = ''
+- else
+  - _has_image = _style = nil
+/ HACK we need a better way to handle build roles
+- _build_roles = (option? :build) ? [(_roles.delete 'fade'), (_roles.delete 'vanish'), (_roles.delete 'replace')] : []
+/ QUESTION should enabling .content wrapper be an option?
+section id=id class=_roles.concat([('image' if _has_image)]) style=_style : .content
   - unless (_title.start_with? '!') || (option? :conceal)
-    / QUESTION do we have the right combinations here?
-    / QUESTION should split be implied when (_title.include? '&#8203; '); or triggered by split (not fit)
-    - if (_fit = option? :fit) || (option? :split)
+    / FIXME slice should be orthogonal to fit
+    / TODO alternate terms for "slice" - part(ition), chunk, segment
+    - if (_fit = option? :fit) || (option? :slice)
+      / QUESTION should slice be implied when (_title.include? '&#8203; ')
       - if (_title.include? '&#8203; ')
-        h2 class=[('fit' if _fit), ('step' if option? :step), ('charred' if option? :charred)]
+        h2 class=[('fit' if _fit), ('build' if option? :build)].concat(_build_roles)
           - (_title.split '&#8203; ').each do |_line|
             span.line=_line
       - else
