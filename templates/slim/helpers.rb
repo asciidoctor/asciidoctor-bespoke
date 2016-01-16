@@ -1,6 +1,8 @@
-# Add custom functions to this module that you want to use in your Slim templates.
-# Within the template you can invoke them as top-level functions.
+# This module gets mixed in to every template. The properties and methods in
+# this module become direct members of the template.
 module Slim::Helpers
+  EOL = %(\n)
+
   def local_attr name, default_val = nil
     attr name, default_val, false
   end
@@ -17,5 +19,9 @@ module Slim::Helpers
 
   def spacer
     ' '
+  end
+
+  def newline
+    EOL
   end
 end
