@@ -22,6 +22,10 @@ module Bespoke
       basebackend 'html'
       htmlsyntax 'html'
     end
+
+    def convert node, transform = nil, opts = {}
+      (node.attributes.delete 'skip-option') ? '' : super
+    end
   end
 end
 end
