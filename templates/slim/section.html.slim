@@ -17,16 +17,15 @@
 / QUESTION should enabling .content wrapper be an option?
 section id=id class=_roles.concat([('image' if _has_image)]) style=_style data-title=(local_attr 'data-title') : .content
   - unless (_title.start_with? '!') || (option? :conceal)
-    / FIXME slice should be orthogonal to fit
     / TODO alternate terms for "slice" - part(ition), chunk, segment
-    - if (_fit = option? :fit) || (option? :slice)
-      / QUESTION should slice be implied when (_title.include? '&#8203; ')
-      - if (_title.include? '&#8203; ')
-        h2 class=[('fit' if _fit), ('build' if option? :build)].concat(_build_roles)
-          - (_title.split '&#8203; ').each do |_line|
-            span.line=_line
-      - else
-        h2 class=('fit' if _fit) : span.line=_title
+    / QUESTION should we wrap in span.line if delimiter is not present?
+    / QUESTION should build be orthogonal to slice?
+    - if (option? :slice) && (_title.include? '&#8203; ')
+      h2 class=[('fit' if option? :fit), ('build' if option? :build)].concat(_build_roles)
+        - (_title.split '&#8203; ').each do |_line|
+          span.line=_line
+    - elsif option? :fit
+      h2.fit : span.line=_title
     - else
       h2=_title
   - unless (_content = content).empty?
