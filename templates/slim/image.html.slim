@@ -3,6 +3,7 @@
 figure.image id=id class=[role, ('flux' if option? :flux)]
   / TODO support link on image
   - (local_attr :target).split('#').each do |_target|
+    =newline
     - if _format == 'svg' || (_target.include? '.svg') && ((_svg = option? :inline) || (_obj = option? :interactive))
       - case
       - when _svg
@@ -14,4 +15,5 @@ figure.image id=id class=[role, ('flux' if option? :flux)]
     - else
       img src=(image_uri _target) alt=_alt width=_width height=_height
   - if title?
+    =newline
     figcaption=title
