@@ -1,9 +1,17 @@
-/ QUESTION default image role?
-figure.image class=[role, ('flux' if option? :flux)]
-  - if (target = local_attr :target).include? '#'
-    - (target.split '#').each do |_target|
-      img src=(image_uri _target) alt=(local_attr :alt) width=(local_attr :width) height=(local_attr :height)
-  - else
-    img src=(image_uri target) alt=(local_attr :alt) width=(local_attr :width) height=(local_attr :height)
+- _alt, _width, _height, _format = (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format)
+/ QUESTION support default image role?
+figure.image id=id class=[role, ('flux' if option? :flux)]
+  / TODO support link on image
+  - (local_attr :target).split('#').each do |_target|
+    - if _format == 'svg' || (_target.include? '.svg') && ((_svg = option? :inline) || (_obj = option? :interactive))
+      - case
+      - when _svg
+        =include_svg _target
+      - when _obj
+        object type='image/svg+xml' data=(image_uri _target) width=_width height=_height
+          / TODO support fallback option
+          span.alt=_alt
+    - else
+      img src=(image_uri _target) alt=_alt width=_width height=_height
   - if title?
     figcaption=title
