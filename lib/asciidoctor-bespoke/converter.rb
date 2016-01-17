@@ -11,6 +11,7 @@ end if Asciidoctor::VERSION == '1.5.4'
 module Asciidoctor
 module Bespoke
   class Converter < ::Asciidoctor::Converter::CompositeConverter
+    DEFAULT_SLIM_OPTIONS = { pretty: true, indent: false }.freeze
     register_for 'bespoke'
 
     def initialize backend, opts = {}
@@ -19,7 +20,7 @@ module Bespoke
         template_dirs.concat extra_template_dirs
       end
       engine_opts = (opts[:template_engine_options] || {}).dup
-      engine_opts[:slim] = (engine_opts.key? :slim) ? { pretty: true }.merge(engine_opts[:slim]) : { pretty: true }
+      engine_opts[:slim] = (engine_opts.key? :slim) ? (DEFAULT_SLIM_OPTIONS.merge engine_opts[:slim]) : DEFAULT_SLIM_OPTIONS
       template_opts = opts.merge htmlsyntax: 'html', template_engine: 'slim', template_engine_options: engine_opts
       template_delegate = ::Asciidoctor::Converter::TemplateConverter.new backend, template_dirs, template_opts
       html5_delegate = ::Asciidoctor::Converter::Html5Converter.new backend, opts
