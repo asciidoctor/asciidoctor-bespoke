@@ -9,12 +9,12 @@ module Slim::Helpers
   WidthAttributeRx = /\swidth="([^"]+)"/
   HeightAttributeRx = /\sheight="([^"]+)"/
 
-  def cdn_uri name, version, path
+  def cdn_uri name, version, path = nil
     unless instance_variable_defined? :@asset_uri_scheme
       @asset_uri_scheme = (scheme = attr 'asset-uri-scheme', 'https').nil_or_empty? ? nil : %(#{scheme}:)
     end
 
-    [%(#{@asset_uri_scheme}#{CDN_BASE}), name, version, path] * '/'
+    [%(#{@asset_uri_scheme}#{CDN_BASE}), name, version, path].compact * '/'
   end
 
   def local_attr name, default_val = nil
