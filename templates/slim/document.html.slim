@@ -6,9 +6,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta name='viewport' content='width=device-width, initial-scale=1'
     meta name='mobile-web-app-capable' content='yes'
     meta name='generator' content="Asciidoctor #{attr 'asciidoctor-version'} (Bespoke.js converter)"
-    - [:description, :keywords, :author, :copyright].each do |key|
-      - if attr? key
-        meta name=key content=(attr key)
+    - [:description, :keywords, :author, :copyright].each do |_key|
+      - if attr? _key
+        meta name=_key content=(attr _key)
     title=doctitle sanitize: true, use_fallback: true
     link rel='stylesheet' href='build/build.css'
     - if attr? :icons, 'font'
