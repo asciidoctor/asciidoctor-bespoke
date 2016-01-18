@@ -18,7 +18,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         link rel='stylesheet' href=(normalize_web_path 'font-awesome.css', (attr :stylesdir, ''))
     - case (_source_highlighter = attr 'source-highlighter')
     - when 'highlight.js'
-      link rel='stylesheet' href="#{_highlightjs_path = attr 'highlightjsdir', (cdn_uri 'highlight.js', '8.9.1')}/styles/#{attr 'highlightjs-theme', 'github'}.min.css"
+      link rel='stylesheet' href="#{_highlightjs_path = attr 'highlightjsdir', (cdn_uri 'highlight.js', '9.1.0')}/styles/#{attr 'highlightjs-theme', 'github'}.min.css"
   body id=id
     article.deck
       - if has_header? && !noheader
