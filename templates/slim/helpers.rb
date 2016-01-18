@@ -1,11 +1,21 @@
 # This module gets mixed in to every template. The properties and methods in
 # this module become direct members of the template.
 module Slim::Helpers
+  CDN_BASE = '//cdnjs.cloudflare.com/ajax/libs'
   EOL = %(\n)
+
   SvgStartTagRx = /\A<svg[^>]*>/
   ViewBoxAttributeRx = /\sviewBox="[^"]+"/
   WidthAttributeRx = /\swidth="([^"]+)"/
   HeightAttributeRx = /\sheight="([^"]+)"/
+
+  def cdn_uri name, version, path
+    unless instance_variable_defined? :@asset_uri_scheme
+      @asset_uri_scheme = (scheme = attr 'asset-uri-scheme', 'https').nil_or_empty? ? nil : %(#{scheme}:)
+    end
+
+    [%(#{@asset_uri_scheme}#{CDN_BASE}), name, version, path] * '/'
+  end
 
   def local_attr name, default_val = nil
     attr name, default_val, false
