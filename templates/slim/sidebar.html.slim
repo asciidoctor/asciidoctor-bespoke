@@ -1,0 +1,5 @@
+- if has_role? 'cue'
+  include _speaker-notes.html
+- else
+  / HACK delegate to fallback converter
+  =converter.converters[-1].convert self
