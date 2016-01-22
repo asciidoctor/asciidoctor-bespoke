@@ -1,7 +1,9 @@
 p id=id class=role
   - if title?
-      - _head_stop = local_attr 'heading-end', ((_stack = option? 'stack') ? nil : '.')
-      strong.heading class=(_stack ? 'stack' : 'run-in') =>%(#{_title = title}#{_head_stop && _title !~ /[.?!:,;]$/ ? _head_stop : nil})
+      - _title = title
+      - _stacked = option? 'stacked'
+      strong.heading(class=(_stacked ? 'stacked' : 'run-in')
+          data-terminus=((local_attr 'heading-terminus', '.') unless _stacked || _title =~ /[.?!:,;]$/))=>_title
       =content
   - else
     =content
