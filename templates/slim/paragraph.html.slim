@@ -1,10 +1,7 @@
 p id=id class=role
   - if title?
-      - _stack = option? 'stack'
-      - _stop = local_attr 'head-stop', (_stack ? nil : '.')
-      - _title = title
-      - _stop = nil if _stop && (_title.end_with? _stop)
-      strong.head class=('stack' if _stack) =>%(#{_title}#{_stop})
+      - _head_stop = local_attr 'heading-end', ((_stack = option? 'stack') ? nil : '.')
+      strong.heading class=(_stack ? 'stack' : 'run-in') =>%(#{_title = title}#{_head_stop && _title !~ /[.?!:,;]$/ ? _head_stop : nil})
       =content
   - else
     =content
