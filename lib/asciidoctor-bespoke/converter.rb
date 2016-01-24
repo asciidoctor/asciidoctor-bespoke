@@ -2,11 +2,11 @@ require 'asciidoctor/converter/html5'
 require 'asciidoctor/converter/composite'
 require 'asciidoctor/converter/template'
 
-# 1.5.4 does not recognize svg tag name if immediately followed by newline
+# Asciidoctor < 1.5.5 doesn't recognize svg tag name if followed immediately by newline
 Asciidoctor::Converter::Html5Converter.tap do |klass|
   klass.send :remove_const, :SvgPreambleRx
   klass.const_set :SvgPreambleRx, /\A.*?(?=<svg\b)/m
-end if Asciidoctor::VERSION == '1.5.4'
+end if Asciidoctor::VERSION == '1.5.3' || Asciidoctor::VERSION == '1.5.4'
 
 module Asciidoctor
 module Bespoke
