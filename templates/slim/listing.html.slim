@@ -1,7 +1,7 @@
 - if style == 'source'
   - if (_language = local_attr :language)
-    / NOTE class attribute required for highlight.js
-    pre.source : code data-lang=_language class="language-#{_language}" =content
+    / NOTE class attribute required for highlight.js and prettify
+    pre.source : code data-lang=_language class="language-#{_language} prettyprint" =content
   - else
     pre.listing=content
 - else
