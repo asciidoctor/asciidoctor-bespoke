@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-if File.exist?(asciidoctor_bespoke = (File.expand_path '../../lib/asciidoctor-bespoke', __FILE__))
+if File.file?(asciidoctor_bespoke = (File.expand_path '../../lib/asciidoctor-bespoke.rb', __FILE__))
   require asciidoctor_bespoke
 else
   require 'asciidoctor-bespoke'
