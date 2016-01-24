@@ -17,3 +17,7 @@ figure.image id=id class=[role, ('flux' if option? :flux)]
   - if title?
     =newline
     figcaption=title
+  - if local_attr? :credit
+    =newline
+    / QUESTION sould we use data-credit on <figure> element instead?
+    small.credit=local_attr :credit
