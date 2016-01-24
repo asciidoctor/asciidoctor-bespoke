@@ -31,6 +31,20 @@ module Slim::Helpers
     content_model == :simple ? %(<p>#{content}</p>) : content
   end
 
+  def partition_title text
+    ::Asciidoctor::Document::Title.new text, separator: (document.attr 'title-separator')
+  end
+
+  # QUESTION should we wrap in span.line if active but delimiter is not present?
+  # TODO alternate terms for "slice" - part(ition), chunk, segment
+  def slice_text text, active = nil
+    if (active || (active.nil? && (option? :slice))) && (text.include? '&#8203; ')
+      (text.split '&#8203; ').map {|line| %(<span class="line">#{line}</span>) }.join EOL
+    else
+      text
+    end
+  end
+
   def include_svg target
     if (svg = converter.converters[-1].read_svg_contents self, target)
       # add viewBox attribute if missing

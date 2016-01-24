@@ -1,4 +1,7 @@
-- _title = header.title
+/ recognize options for the doctitle (aka header); should be part of Asciidoctor core
+- if attr? 'title-opts'
+  - (attr 'title-opts').split(',').each {|opt| header.set_option opt unless header.option? opt }
+- _slice = header.option? :slice
 - if blocks? && (_block_1 = blocks[0]).context == :preamble
   - (_preamble = _block_1).attributes['skip-option'] = ''
   - if _preamble.blocks? && (_block_1 = _preamble.blocks[0]).context == :image && ((_block_1_roles = _block_1.roles).include? 'canvas')
@@ -10,14 +13,13 @@
     - _has_image = _style = nil
 - else
   - _preamble = _has_image = _style = nil
-// QUESTION how do we set an id for this slide?
-section.title class=[('image' if _has_image), role] style=_style data-title=''
-  - if (attr? 'title-slide-opts') && (attr 'title-slide-opts').split(',').include?('slice') && (_title.include? '&#8203; ')
-    h1
-      - (_title.split '&#8203; ').each do |_line|
-        span.line=_line
+section.title id=(attr 'title-id') class=[('image' if _has_image), role] style=_style data-title=''
+  - if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?
+    header
+      h1=slice_text _title_obj.title, _slice
+      h2=slice_text _title_obj.subtitle, _slice
   - else
-    h1=_title
+    h1=slice_text _title_obj.title, _slice
   / TODO move to include file
   - if attr? :author
     footer
