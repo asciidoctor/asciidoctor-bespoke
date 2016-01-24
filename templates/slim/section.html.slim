@@ -1,5 +1,4 @@
 / QUESTION how should we handle ids for concealed sections?
-/ TODO pull out speaker notes to be adjacent to .content
 - _title = title
 - _roles = roles
 / TODO alternate terms for "canvas" - pane, slide, panel
@@ -15,7 +14,7 @@
 / HACK we need a better way to handle build roles
 - _build_roles = (option? :build) ? [(_roles.delete 'fade'), (_roles.delete 'vanish'), (_roles.delete 'replace')] : []
 / QUESTION should enabling .content wrapper be an option?
-section id=id class=_roles.concat([('image' if _has_image)]) style=_style data-title=(local_attr 'data-title') : .content
+section id=id class=_roles.concat([('image' if _has_image)]) style=_style data-title=(local_attr 'data-title')
   - unless (_title.start_with? '!') || (option? :conceal)
     / TODO alternate terms for "slice" - part(ition), chunk, segment
     / QUESTION should we wrap in span.line if delimiter is not present?

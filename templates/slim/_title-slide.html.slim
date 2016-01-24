@@ -11,7 +11,7 @@
 - else
   - _preamble = _has_image = _style = nil
 // QUESTION how do we set an id for this slide?
-section.title class=[('image' if _has_image), role] style=_style data-title='' : .content
+section.title class=[('image' if _has_image), role] style=_style data-title=''
   - if (attr? 'title-slide-opts') && (attr 'title-slide-opts').split(',').include?('slice') && (_title.include? '&#8203; ')
     h1
       - (_title.split '&#8203; ').each do |_line|
