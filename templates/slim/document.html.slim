@@ -19,6 +19,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - case (_source_highlighter = attr 'source-highlighter')
     - when 'highlight.js'
       link rel='stylesheet' href="#{_highlightjs_path = attr 'highlightjsdir', (cdn_uri 'highlight.js', '9.1.0')}/styles/#{attr 'highlightjs-theme', 'github'}.min.css"
+    - when 'prettify'
+      link rel='stylesheet' href="#{_prettify_path = attr 'prettifydir', (cdn_uri 'prettify', 'r298')}/#{attr 'prettify-theme', 'prettify'}.min.css"
   body id=id
     article.deck
       - if has_header? && !noheader
@@ -30,3 +32,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - when 'highlight.js'
       script src="#{_highlightjs_path}/highlight.min.js"
       |<script>hljs.initHighlighting()</script>
+    - when 'prettify'
+      script src="#{_prettify_path}/prettify.js"
+      |<script>prettyPrint()</script>
