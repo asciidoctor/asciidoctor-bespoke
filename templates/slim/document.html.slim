@@ -23,6 +23,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     article.deck
       - if has_header? && !noheader
         include _title-slide.html
+        =newline
       =content
     script src='build/build.js'
     - case _source_highlighter
