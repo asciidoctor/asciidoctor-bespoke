@@ -24,22 +24,24 @@ section.title class=[('image' if _has_image), role] style=_style data-title=''
       / TODO handle multiple authors
       p.author
         span.personname
-          span.firstname=attr :firstname
-          =spacer
+          span.firstname=>attr :firstname
           span.surname=attr :lastname
-          /- if attr? :company
-          /  =spacer
-          /  span.company=attr :company
+        - if (attr? :position) || (attr? :organization)
+          =newline
+          span.affiliation
+            - if attr? :position
+              span.position=>attr :position
+            - if attr? :organization
+              span.organization=attr :organization
         - if attr? :avatar
           =newline
           img.avatar src=(image_uri attr :avatar) alt=(attr :author)
         - if (attr? :twitter) || (attr? :email)
           =newline
-          span.contactinfo
+          span.contact
             - if attr? :twitter
-              span.twitter=attr :twitter
+              span.twitter=>attr :twitter
             - if (attr? :email) && (((_url = attr :email).start_with? 'http://') || (_url.start_with? 'https://'))
-              =spacer
               span.url=_url[((_url.index '//') + 2)..-1]
       /p.meta
       /  - if attr? :hashtag
