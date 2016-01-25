@@ -44,3 +44,18 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - when 'prettify'
       script src="#{_prettify_path}/prettify.js"
       |<script>prettyPrint()</script>
+    - if attr? :stem
+      script type='text/x-mathjax-config'
+        |MathJax.Hub.Config({
+           messageStyle: "none",
+           tex2jax: {
+             inlineMath: [#{Asciidoctor::INLINE_MATH_DELIMITERS[:latexmath].inspect}],
+             displayMath: [#{Asciidoctor::BLOCK_MATH_DELIMITERS[:latexmath].inspect}],
+             ignoreClass: "nostem|nolatexmath"
+           },
+           asciimath2jax: {
+             delimiters: [#{Asciidoctor::BLOCK_MATH_DELIMITERS[:asciimath].inspect}],
+             ignoreClass: "nostem|noasciimath"
+           }
+         });
+      script src="#{cdn_uri 'mathjax', '2.6.0', 'MathJax.js?config=TeX-MML-AM_HTMLorMML'}"
