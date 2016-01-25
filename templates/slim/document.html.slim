@@ -6,6 +6,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta name='viewport' content='width=device-width, initial-scale=1'
     meta name='mobile-web-app-capable' content='yes'
     meta name='generator' content="Asciidoctor #{attr 'asciidoctor-version'} (Bespoke.js converter)"
+    / QUESTION include docdate in meta?
     - [:description, :keywords, :author, :copyright].each do |_key|
       - if attr? _key
         meta name=_key content=(attr _key)
@@ -21,12 +22,20 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link rel='stylesheet' href="#{_highlightjs_path = attr 'highlightjsdir', (cdn_uri 'highlight.js', '9.1.0')}/styles/#{attr 'highlightjs-theme', 'github'}.min.css"
     - when 'prettify'
       link rel='stylesheet' href="#{_prettify_path = attr 'prettifydir', (cdn_uri 'prettify', 'r298')}/#{attr 'prettify-theme', 'prettify'}.min.css"
+    - unless (_docinfo_content = docinfo :head, '-bespoke.html').empty?
+      =_docinfo_content
   body id=id
     article.deck
-      - if has_header? && !noheader
-        include _title-slide.html
-        =newline
+      - unless noheader
+        /- unless (_docinfo_content = docinfo :header, '-bespoke.html').empty?
+        /  =_docinfo_content
+        - if has_header?
+          include _title-slide.html
+          /- unless blocks? && blocks[0].context == :preamble
+          /  =newline
       =content
+      - unless (_docinfo_content = docinfo :footer, '-bespoke.html').empty?
+        =_docinfo_content
     script src='build/build.js'
     - case _source_highlighter
     - when 'highlight.js'
