@@ -1,8 +1,9 @@
-- _alt, _width, _height, _format = (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format)
+- _target, _alt, _width, _height, _format = (local_attr :target), (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format)
 / QUESTION support default image role?
 figure.image id=id class=[role, ('flux' if option? :flux)]
   / TODO support link on image
-  - (local_attr :target).split('#').each do |_target|
+  / TODO append an index/counter to the alt attribute (since it is otherwise shared)
+  - _target.split(/[#,]/).each do |_target|
     =newline
     - if _format == 'svg' || (_target.include? '.svg') && ((_svg = option? :inline) || (_obj = option? :interactive))
       - case
