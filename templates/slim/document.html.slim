@@ -6,7 +6,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta name='viewport' content='width=device-width, initial-scale=1'
     meta name='mobile-web-app-capable' content='yes'
     meta name='generator' content="Asciidoctor #{attr 'asciidoctor-version'} (Bespoke.js converter)"
-    / QUESTION include docdate in meta?
     - [:description, :keywords, :author, :copyright].each do |_key|
       - if attr? _key
         meta name=_key content=(attr _key)
@@ -40,9 +39,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - case _source_highlighter
     - when 'highlight.js'
       script src="#{_highlightjs_path}/highlight.min.js"
+      |<script>[].forEach.call(document.querySelectorAll('i.conum + b'), function(n) { n.parentNode.removeChild(n); })</script>
       |<script>hljs.initHighlighting()</script>
     - when 'prettify'
       script src="#{_prettify_path}/prettify.js"
+      |<script>[].forEach.call(document.querySelectorAll('i.conum + b'), function(n) { n.parentNode.removeChild(n); })</script>
       |<script>prettyPrint()</script>
     - if attr? :stem
       script type='text/x-mathjax-config'
