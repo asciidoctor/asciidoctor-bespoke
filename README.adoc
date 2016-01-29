@@ -7,7 +7,7 @@ Dan Allen <https://github.com/mojavelinux>
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
 
-A converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML part of a {uri-bespoke}[Bespoke.js] presentation from an {uri-asciidoc}[AsciiDoc] source file.
+A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML part of a {uri-bespoke}[Bespoke.js] presentation from an {uri-asciidoc}[AsciiDoc] source file.
 
 == Authors
 
