@@ -9,7 +9,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - [:description, :keywords, :author, :copyright].each do |_key|
       - if attr? _key
         meta name=_key content=(attr _key)
-    title=doctitle sanitize: true, use_fallback: true
+    title=(doctitle sanitize: true, use_fallback: true).tr_s(' ', ' ')
     link rel='stylesheet' href='build/build.css'
     - if attr? :icons, 'font'
       - if attr? 'iconfont-remote'
@@ -28,7 +28,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       - unless noheader
         /- unless (_docinfo_content = docinfo :header, '-bespoke.html').empty?
         /  =_docinfo_content
-        - if has_header?
+        - if header?
           include _title-slide.html
           /- unless blocks? && blocks[0].context == :preamble
           /  =newline
@@ -39,11 +39,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - case _source_highlighter
     - when 'highlight.js'
       script src="#{_highlightjs_path}/highlight.min.js"
-      |<script>[].forEach.call(document.querySelectorAll('i.conum + b'), function(n) { n.parentNode.removeChild(n); })</script>
+      |<script>Array.prototype.forEach.call(document.querySelectorAll('i.conum+b'),function(n){n.parentNode.removeChild(n)});</script>
       |<script>hljs.initHighlighting()</script>
     - when 'prettify'
       script src="#{_prettify_path}/prettify.js"
-      |<script>[].forEach.call(document.querySelectorAll('i.conum + b'), function(n) { n.parentNode.removeChild(n); })</script>
+      |<script>Array.prototype.forEach.call(document.querySelectorAll('i.conum+b'),function(n){n.parentNode.removeChild(n)})</script>
       |<script>prettyPrint()</script>
     - if attr? :stem
       script type='text/x-mathjax-config'
@@ -58,5 +58,5 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
              delimiters: [#{Asciidoctor::BLOCK_MATH_DELIMITERS[:asciimath].inspect}],
              ignoreClass: "nostem|noasciimath"
            }
-         });
+         })
       script src="#{cdn_uri 'mathjax', '2.6.0', 'MathJax.js?config=TeX-MML-AM_HTMLorMML'}"

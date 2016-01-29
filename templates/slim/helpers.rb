@@ -8,6 +8,7 @@ module Slim::Helpers
   ViewBoxAttributeRx = /\sviewBox="[^"]+"/
   WidthAttributeRx = /\swidth="([^"]+)"/
   HeightAttributeRx = /\sheight="([^"]+)"/
+  SliceHintRx = /  +/
 
   def cdn_uri name, version, path = nil
     unless instance_variable_defined? :@asset_uri_scheme
@@ -36,10 +37,10 @@ module Slim::Helpers
   end
 
   # QUESTION should we wrap in span.line if active but delimiter is not present?
-  # TODO alternate terms for "slice" - part(ition), chunk, segment
+  # TODO alternate terms for "slice" - part(ition), chunk, segment, split, break
   def slice_text text, active = nil
-    if (active || (active.nil? && (option? :slice))) && (text.include? '&#8203; ')
-      (text.split '&#8203; ').map {|line| %(<span class="line">#{line}</span>) }.join EOL
+    if (active || (active.nil? && (option? :slice))) && (text.include? '  ')
+      (text.split SliceHintRx).map {|line| %(<span class="line">#{line}</span>) }.join EOL
     else
       text
     end
