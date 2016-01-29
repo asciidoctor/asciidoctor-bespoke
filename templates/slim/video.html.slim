@@ -1,6 +1,7 @@
-figure.video
-  video(class=role src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
+figure.video id=id class=role
+  video(src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
       poster=((_poster = local_attr :poster).nil_or_empty? ? nil : (media_uri _poster)) autoplay=(option? :autoplay)
       controls=(true unless option? :nocontrols) loop=(option? :loop))
+    span.alt=local_attr :alt, 'Your browser does not support the video element.'
   - if title?
     figcaption=title
