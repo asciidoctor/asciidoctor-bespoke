@@ -2,7 +2,8 @@
 - _title = title
 - _roles = roles
 / HACK we need a better way to handle build roles
-- _build_roles = (option? :build) ? ['build'].concat(%w(fade vanish replace).map {|_r| _roles.delete _r }) : []
+/ TODO support build attribute for more fine-grained control
+- _build_roles = (option? :build) ? ['build', 'build-items', *%w(fade vanish replace).map {|_r| _roles.delete _r }] : []
 / TODO alternate terms for "canvas" - pane, slide, panel
 / TODO also implement "surface" (alternate terms for "surface" - backdrop, screen)
 / QUESTION should we allow the image to be anywhere in the section content? (i.e., use find_by)
@@ -14,7 +15,7 @@
 - else
   - _has_image = _style = nil
 / QUESTION should enabling .content wrapper be an option?
-section id=_id class= _roles.concat([('image' if _has_image)]) style=_style data-title=(local_attr 'data-title')
+section id=_id class=[*_roles, ('image' if _has_image)] style=_style data-title=(local_attr 'data-title')
   - unless (_title.start_with? '!') || (option? :conceal)
     - if (_title_obj = partition_title _title).subtitle?
       / QUESTION should we support fit option when there's a subtitle?
@@ -22,7 +23,7 @@ section id=_id class= _roles.concat([('image' if _has_image)]) style=_style data
         h2=slice_text _title_obj.title
         h3=slice_text _title_obj.subtitle
     - else
-        / QUESTION always wrap in span.line when option? :fit (or just fix plugin?)
-        h2 class=[('fit' if option? :fit)].concat(_build_roles) =slice_text _title_obj.title
+        / QUESTION always wrap in span.line when option? :fit
+        h2 class=[('fit' if option? :fit), *_build_roles] =slice_text _title_obj.title
   - unless (_content = content).empty?
     =_content

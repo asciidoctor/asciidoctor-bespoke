@@ -3,6 +3,10 @@
 module Slim::Helpers
   CDN_BASE = '//cdnjs.cloudflare.com/ajax/libs'
   EOL = %(\n)
+  BUILD_ROLE_BY_TYPE = {
+    'self' => 'build',
+    'items' => 'build-items'
+  }
 
   SvgStartTagRx = /\A<svg[^>]*>/
   ViewBoxAttributeRx = /\sviewBox="[^"]+"/
@@ -34,6 +38,42 @@ module Slim::Helpers
 
   def partition_title text
     ::Asciidoctor::Document::Title.new text, separator: (document.attr 'title-separator')
+  end
+
+  # Public: Retrieve the level-1 section node for the current slide.
+  #
+  # Returns the Asciidoctor::Section for the current slide.
+  def slide
+    node = self
+    until node.context == :section && node.level == 1
+      node = node.parent
+    end
+    node
+  end
+
+  # Resolve the list of build-related roles for this block.
+  #
+  # Consults the build attribute first, then the build option if the build
+  # attribute is not set.
+  #
+  # Also sets the build-initiated attribute on the slide if not previously set.
+  #
+  # Returns an Array of build-related roles or an empty Array if builds are not
+  # enabled on this node.
+  def build_roles
+    if local_attr? :build
+      slide.set_attr 'build-initiated', ''
+      (local_attr :build).split('+').map {|type| BUILD_ROLE_BY_TYPE[type] }
+    elsif option? :build
+      if (_slide = slide).local_attr? 'build-initiated'
+        ['build-items']
+      else
+        _slide.set_attr 'build-initiated', ''
+        ['build', 'build-items']
+      end
+    else
+      []
+    end
   end
 
   # QUESTION should we wrap in span.line if active but delimiter is not present?

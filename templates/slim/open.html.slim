@@ -1,5 +1,4 @@
-- _roles = (option? :build) ? (roles.unshift 'build') : roles
-- if id || !_roles.empty?
+- if !(_roles = roles.concat build_roles).empty? || id
   div id=id class=_roles =content
 - else
   =content

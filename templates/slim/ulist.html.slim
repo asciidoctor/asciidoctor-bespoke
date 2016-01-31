@@ -1,11 +1,4 @@
-/ TODO block title
-- if local_attr? :build
-  - _build_role = { 'group' => 'build', 'items' => 'build-items', 'all' => 'build build-items' }[local_attr :build]
-- elsif option? :build
-  - _build_role = 'build build-items'
-- else
-  - _build_role = nil
-ul id=id class=[style, ('fit' if (_fit = option? :fit)), _build_role, role]
+ul id=id class=[style, ('fit' if (_fit = option? :fit)), *build_roles, role]
   - items.each do |_item|
     li class=('line' if _fit)
       span.principal=_item.text
