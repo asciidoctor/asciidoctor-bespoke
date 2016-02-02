@@ -31,8 +31,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         /  =_docinfo
         - if header?
           include _title-slide.html
-          /- unless blocks? && blocks[0].context == :preamble
-          /  =newline
       =content
       - unless (_docinfo = docinfo :footer, '-bespoke.html').empty?
         =_docinfo
