@@ -1,5 +1,5 @@
 / recognize options for the doctitle (aka header); should be part of Asciidoctor core
-- if header? && (attr? 'title-opts')
+- if (attr? 'title-opts')
   - (attr 'title-opts').split(',').each {|opt| header.set_option opt unless header.option? opt }
 - if blocks? && (_block_1 = blocks[0]).context == :preamble
   - (_preamble = _block_1).attributes['skip-option'] = ''
