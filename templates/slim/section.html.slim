@@ -15,7 +15,7 @@
 - else
   - _has_image = _style = nil
 / QUESTION should enabling .content wrapper be an option?
-section id=_id class=[*_roles, ('image' if _has_image)] style=_style data-title=(local_attr 'data-title')
+section id=_id class=[*_roles, ('image' if _has_image)] style=_style data-title=(local_attr 'reftext') data-bespoke-backdrop=(local_attr 'backdrop-role')
   - unless (_title.start_with? '!') || (option? :conceal)
     - if (_title_obj = partition_title _title).subtitle?
       / QUESTION should we support fit option when there's a subtitle?
