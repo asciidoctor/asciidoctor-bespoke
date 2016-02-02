@@ -107,8 +107,11 @@ module Slim::Helpers
     ' '
   end
 
-  # FIXME this should return nil if pretty mode is not active
-  def newline;
-    EOL
+  def newline
+    if defined? @pretty
+      @pretty ? EOL : nil
+    elsif (@pretty = ::Thread.current[:tilt_current_template].options[:pretty])
+      EOL
+    end
   end
 end
