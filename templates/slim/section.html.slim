@@ -2,7 +2,8 @@
 - _id = (_id = id) && _title == '!' && !(local_attr? :id) ? nil : _id
 - _roles = roles
 / HACK we need a better way to handle build roles
-/ TODO support build attribute for more fine-grained control
+/ TODO support build attribute here for more fine-grained control
+/ QUESTION should build roles be applied to the section?
 - _build_roles = (option? :build) ? ['build', 'build-items', *%w(fade vanish replace).map {|_r| _roles.delete _r }] : []
 / TODO alternate terms for "canvas" - pane, slide, panel
 / TODO also implement "surface" (alternate terms for "surface" - backdrop, screen)
@@ -14,16 +15,21 @@
   - _style = %(background-image: url(#{image_uri(_block_1.attr :target)}); background-size: #{_bg_size}; background-repeat: no-repeat)
 - else
   - _has_image = _style = nil
-/ QUESTION should enabling .content wrapper be an option?
 section id=_id class=[*_roles, ('image' if _has_image)] style=_style data-title=(local_attr 'reftext') data-bespoke-backdrop=(local_attr 'backdrop-role')
-  - unless (_title.start_with? '!') || (option? :conceal)
-    - if (_title_obj = partition_title _title).subtitle?
-      / QUESTION should we support fit option when there's a subtitle?
-      header class=_build_roles
-        h2=slice_text _title_obj.title
-        h3=slice_text _title_obj.subtitle
-    - else
-        / QUESTION always wrap in span.line when option? :fit
-        h2 class=[('fit' if option? :fit), *_build_roles] =slice_text _title_obj.title
-  - unless (_content = content).empty?
-    =_content
+  - content_for :content
+    - unless (_title.start_with? '!') || (option? :conceal)
+      - if (_title_obj = partition_title _title).subtitle?
+        / QUESTION should we support fit option when there's a subtitle?
+        header class=_build_roles
+          h2=slice_text _title_obj.title
+          h3=slice_text _title_obj.subtitle
+      - else
+          / QUESTION always wrap in span.line when option? :fit
+          h2 class=[('fit' if option? :fit), *_build_roles] =slice_text _title_obj.title
+    - unless (_content = content).empty?
+      =_content
+  - if (option? :enclose) || (document.attr? 'enclose-option')
+    .content
+      - yield_content :content
+  - else
+    - yield_content :content

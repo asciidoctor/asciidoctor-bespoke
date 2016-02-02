@@ -1,5 +1,6 @@
-# This module gets mixed in to every template. The properties and methods in
-# this module become direct members of the template.
+# This module gets mixed in to every node (the context of the template) at the
+# time the node is being converted. The properties and methods in this module
+# effectively become direct members of the template.
 module Slim::Helpers
   CDN_BASE = '//cdnjs.cloudflare.com/ajax/libs'
   EOL = %(\n)
@@ -13,6 +14,68 @@ module Slim::Helpers
   WidthAttributeRx = /\swidth="([^"]+)"/
   HeightAttributeRx = /\sheight="([^"]+)"/
   SliceHintRx = /  +/
+
+  # Capture nested template content and register it with the specified key, to
+  # be executed at a later time.
+  #
+  # This method must be invoked using the control code directive (i.e., -). By
+  # using a control code directive, the block is set up to append the result
+  # directly to the output buffer. (Integrations often hide the distinction
+  # between a control code directive and an output directive in this context).
+  #
+  # key   - The Symbol under which to save the template block.
+  # opts  - A Hash of options to control processing (default: {}):
+  #         * :append  - A Boolean that indicates whether to append this block
+  #                      to others registered with this key (default: false).
+  #         * :content - String content to be used if template content is not
+  #                      provided (optional).
+  # block - The template content (in Slim template syntax).
+  #
+  # Examples
+  #
+  #   - content_for :body
+  #     p content
+  #   - content_for :body, append: true
+  #     p more content
+  #
+  # Returns nothing.
+  def content_for key, opts = {}, &block
+    @content = {} unless defined? @content
+    (opts[:append] ? (@content[key] ||= []) : (@content[key] = [])) << (block_given? ? block : lambda { opts[:content] })
+    nil
+  end
+
+  # Checks whether deferred template content has been registered for the specified key.
+  #
+  # key - The Symbol under which to look for saved template blocks.
+  #
+  # Returns a Boolean indicating whether content has been registered for this key.
+  def content_for? key
+    (defined? @content) && (@content.key? key)
+  end
+
+  # Evaluates the deferred template content registered with the specified key.
+  #
+  # When the corresponding content_for method is invoked using a control code
+  # directive, the block is set up to append the result to the output buffer
+  # directly.
+  #
+  # key  - The Symbol under which to look for template blocks to yield.
+  # opts - A Hash of options to control processing (default: {}):
+  #        * :drain - A Boolean indicating whether to drain the key of blocks
+  #                   after calling them (default: true).
+  #
+  # Examples
+  #
+  #   - yield_content :body
+  #
+  # Returns nothing (assuming the content has been captured in the context of control code).
+  def yield_content key, opts = {}
+    if (defined? @content) && (blocks = (opts.fetch :drain, true) ? (@content.delete key) : @content[key])
+      blocks.map {|b| b.call }.join
+    end
+    nil
+  end
 
   def cdn_uri name, version, path = nil
     unless instance_variable_defined? :@asset_uri_scheme
@@ -40,7 +103,7 @@ module Slim::Helpers
     ::Asciidoctor::Document::Title.new text, separator: (document.attr 'title-separator')
   end
 
-  # Public: Retrieve the level-1 section node for the current slide.
+  # Retrieves the level-1 section node for the current slide.
   #
   # Returns the Asciidoctor::Section for the current slide.
   def slide
@@ -51,7 +114,7 @@ module Slim::Helpers
     node
   end
 
-  # Resolve the list of build-related roles for this block.
+  # Resolves the list of build-related roles for this block.
   #
   # Consults the build attribute first, then the build option if the build
   # attribute is not set.
