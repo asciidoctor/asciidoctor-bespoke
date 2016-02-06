@@ -10,7 +10,7 @@ module Slim::Helpers
   }
 
   SvgStartTagRx = /\A<svg[^>]*>/
-  ViewBoxAttributeRx = /\sviewBox="[^"]+"/
+  ViewBoxAttributeRx = /\sview[bB]ox="[^"]+"/
   WidthAttributeRx = /\swidth="([^"]+)"/
   HeightAttributeRx = /\sheight="([^"]+)"/
   SliceHintRx = /  +/
@@ -71,8 +71,8 @@ module Slim::Helpers
   #
   # Returns nothing (assuming the content has been captured in the context of control code).
   def yield_content key, opts = {}
-    if (defined? @content) && (blocks = (opts.fetch :drain, true) ? (@content.delete key) : @content[key])
-      blocks.map {|b| b.call }.join
+    if (defined? @content) && (blks = (opts.fetch :drain, true) ? (@content.delete key) : @content[key])
+      blks.map {|b| b.call }.join
     end
     nil
   end
@@ -85,22 +85,48 @@ module Slim::Helpers
     [%(#{@asset_uri_scheme}#{CDN_BASE}), name, version, path].compact * '/'
   end
 
+  #--
+  #TODO mix directly into AbstractNode
   def local_attr name, default_val = nil
     attr name, default_val, false
   end
 
+  #--
+  #TODO mix directly into AbstractNode
   def local_attr? name, default_val = nil
     attr? name, default_val, false
   end
 
-  # Retrieve the converted content, wrap it in a paragraph element if
-  # the content_model is :simple and return the result.
-  def prepare_content
-    content_model == :simple ? %(<p>#{content}</p>) : content
+  # Retrieve the converted content, wrap it in a `<p>` element if
+  # the content_model equals :simple and return the result.
+  #
+  # Returns the block content as a String, wrapped inside a `<p>` element if
+  # the content_model equals `:simple`.
+  def resolve_content
+    @content_model == :simple ? %(<p>#{content}</p>) : content
   end
 
-  def partition_title text
-    ::Asciidoctor::Document::Title.new text, separator: (document.attr 'title-separator')
+  #--
+  #TODO mix into AbstractBlock directly?
+  def pluck selector = {}, &block
+    quantity = (selector.delete :quantity).to_i
+    if blocks?
+      unless (result = find_by selector, &block).empty?
+        result = result[0..(quantity - 1)] if quantity > 0
+        result.each {|b| b.set_attr 'skip-option', '' }
+      end
+    else
+      result = []
+    end
+    quantity == 1 ? result[0] : result
+  end
+
+  def pluck_first selector = {}, &block
+    pluck selector.merge(quantity: 1), &block
+  end
+
+  def partition_title str
+    ::Asciidoctor::Document::Title.new str, separator: (@document.attr 'title-separator')
   end
 
   # Retrieves the level-1 section node for the current slide.
@@ -141,16 +167,28 @@ module Slim::Helpers
 
   # QUESTION should we wrap in span.line if active but delimiter is not present?
   # TODO alternate terms for "slice" - part(ition), chunk, segment, split, break
-  def slice_text text, active = nil
-    if (active || (active.nil? && (option? :slice))) && (text.include? '  ')
-      (text.split SliceHintRx).map {|line| %(<span class="line">#{line}</span>) }.join EOL
+  def slice_text str, active = nil
+    if (active || (active.nil? && (option? :slice))) && (str.include? '  ')
+      (str.split SliceHintRx).map {|line| %(<span class="line">#{line}</span>) }.join EOL
     else
-      text
+      str
     end
   end
 
+  # Retrieves the built-in html5 converter.
+  # 
+  # Returns the instance of the Asciidoctor::Converter::Html5Converter
+  # associated with this node.
+  def html5_converter
+    converter.converters[-1]
+  end
+
+  def delegate
+    html5_converter.convert self
+  end
+
   def include_svg target
-    if (svg = converter.converters[-1].read_svg_contents self, target)
+    if (svg = html5_converter.read_svg_contents self, target)
       # add viewBox attribute if missing
       unless ViewBoxAttributeRx =~ (start_tag = SvgStartTagRx.match(svg)[0])
         if (width = start_tag.match WidthAttributeRx) && (width = width[1].to_f) >= 0 &&

@@ -1,18 +1,12 @@
-/ recognize options for the doctitle (aka header); should be part of Asciidoctor core
-- if (attr? 'title-opts')
-  - (attr 'title-opts').split(',').each {|opt| header.set_option opt unless header.option? opt }
-- if blocks? && (_block_1 = blocks[0]).context == :preamble
-  - (_preamble = _block_1).attributes['skip-option'] = ''
-  - if _preamble.blocks? && (_block_1 = _preamble.blocks[0]).context == :image && ((_block_1_roles = _block_1.roles).include? 'canvas')
-    - _block_1.attributes['skip-option'] = ''
-    - _has_image = true
-    - _bg_size = (_block_1_roles & ['cover', 'contain'])[0] || 'cover'
-    - _style = %(background-image: url(#{image_uri(_block_1.attr :target)}); background-size: #{_bg_size}; background-repeat: no-repeat)
-  - else
-    - _has_image = _style = nil
-- else
-  - _preamble = _has_image = _style = nil
-section.title id=(attr 'title-id') class=[role, ('image' if _has_image)] style=_style data-title='' data-bespoke-backdrop=(attr 'title-backdrop-role')
+/ recognize id and options for the doctitle (aka header); should be part of Asciidoctor core
+- (attr 'header-opts').split(',').each {|opt| header.set_option opt unless header.option? opt } if attr? 'header-opts'
+- header.id = attr 'header-id'
+- _bg_img = _style = nil
+- if (_preamble = pluck_first context: :preamble)
+  - unless (_result = _preamble.find_by context: :image, role: 'canvas').empty?
+    - (_bg_img = _result[0]).set_attr 'skip-option', ''
+    - _style = %[background-image: url(#{image_uri _bg_img.attr(:target)}); background-size: #{(_bg_img.roles & %w[cover contain])[0] || 'cover'}; background-repeat: no-repeat]
+section.title id=header.id class=[role, ('image' if _bg_img)] style=_style data-title='' data-bespoke-backdrop=(attr 'header-backdrop-role')
   - content_for :content
     - if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?
       header
@@ -20,7 +14,8 @@ section.title id=(attr 'title-id') class=[role, ('image' if _has_image)] style=_
         h2=slice_text _title_obj.subtitle, _slice
     - else
       h1=slice_text _title_obj.title, (header.option? :slice)
-    / TODO move to include file
+    =_preamble ? _preamble.content : nil
+    / TODO move footer to include file
     - if attr? :author
       footer
         / TODO handle multiple authors
@@ -45,14 +40,12 @@ section.title id=(attr 'title-id') class=[role, ('image' if _has_image)] style=_
                 span.twitter=>attr :twitter
               - if (attr? :email) && (((_url = attr :email).start_with? 'http://') || (_url.start_with? 'https://'))
                 span.url=_url[((_url.index '//') + 2)..-1]
-        /p.meta
-        /  - if attr? :hashtag
-        /    span.hashtag=attr :hashtag
-    / TODO move above footer; pluck cue notes so they display last
-    - if _preamble
-      =_preamble.content
+        /- if attr? :hashtag
+        /  p.meta: span.hashtag=attr :hashtag
   - if (header.option? :enclose) || (document.attr? 'enclose-option')
+      - _notes = _preamble ? (pluck_first context: :sidebar, role: 'cue') : nil
       .content
         - yield_content :content
+      =_notes ? _notes.convert : nil
   - else
     - yield_content :content

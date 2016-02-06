@@ -1,6 +1,6 @@
 - _has_attribution, _has_citetitle, _has_title = (local_attr? :attribution), (local_attr? :citetitle), title?
 figure.quote id=id class=role
-  blockquote=prepare_content
+  blockquote=resolve_content
   - if _has_attribution || _has_citetitle || _has_title
     =newline
     figcaption
