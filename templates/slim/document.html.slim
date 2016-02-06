@@ -30,7 +30,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         /- unless (_docinfo = docinfo :header, '-bespoke.html').empty?
         /  =_docinfo
         - if header?
-          include slide_title.html
+          include slide_title.html.slim
       =content
       - unless (_docinfo = docinfo :footer, '-bespoke.html').empty?
         =_docinfo
