@@ -1,7 +1,30 @@
-figure.video id=id class=role
-  video(src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
-      poster=((_poster = local_attr :poster).nil_or_empty? ? nil : (media_uri _poster)) autoplay=(option? :autoplay)
-      controls=(true unless option? :nocontrols) loop=(option? :loop))
-    span.alt=local_attr :alt, 'Your browser does not support the video element.'
+- _service = (%w(vimeo youtube) & [(local_attr :poster)])[0]
+figure.video class=_service id=id class=role
+  - case _service
+  - when 'vimeo'
+    - require 'securerandom' unless defined? ::SecureRandom
+    - _player_id = %(vimeo-#{SecureRandom.urlsafe_base64 7})
+    - _start = (local_attr? :start) ? %(#at=#{local_attr :start}) : nil
+    / NOTE for a list of params, see https://developer.vimeo.com/player/embedding#universal-parameters
+    - _params = ['api=1', %(player_id=#{_player_id}), 'badge=0', 'portrait=0', 'title=0', 'byline=0']
+    - _params << 'loop=1' if option? :loop
+    - _src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{local_attr :target}?#{_params * '&amp;'})
+    iframe id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen)
+  - when 'youtube'
+    - _target = local_attr :target
+    - _params = ['enablejsapi=1', 'rel=0', 'showinfo=0', 'controls=0', 'disablekb=1']
+    / NOTE start and end must be in seconds
+    - _params << %(start=#{local_attr :start}) if local_attr? :start
+    - _params << %(end=#{local_attr :start}) if local_attr? :end
+    - _params += ['loop=1', %(playlist=#{_target})] if option? :loop
+    - _params << 'fs=0' if option? :nofullscreen
+    - _params << %(hl=#{document.attr :lang}) if document.attr? :lang
+    - _src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{_target}?#{_params * '&amp;'})
+    iframe src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen) data-volume=((option? :muted) ? 0 : (local_attr :volume))
+  - else
+    video(src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
+        poster=((_poster = local_attr :poster).nil_or_empty? ? nil : (media_uri _poster)) preload='auto'
+        controls=('true' if option? :controls) loop=('true' if option? :loop))
+      span.alt=local_attr :alt, 'Your browser does not support the video element.'
   - if title?
     figcaption=title
