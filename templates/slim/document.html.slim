@@ -4,12 +4,20 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta charset=(attr :encoding, 'utf-8')
     / QUESTION should we add maximum-scale=1 to viewport setting?
     meta name='viewport' content='width=device-width, initial-scale=1'
-    meta name='mobile-web-app-capable' content='yes'
-    meta name='generator' content="Asciidoctor #{attr 'asciidoctor-version'} (Bespoke.js converter)"
+    title=(doctitle sanitize: true, use_fallback: true).tr_s(' ', ' ')
     - [:description, :keywords, :author, :copyright].each do |_key|
       - if attr? _key
         meta name=_key content=(attr _key)
-    title=(doctitle sanitize: true, use_fallback: true).tr_s(' ', ' ')
+    meta name='generator' content="Asciidoctor #{attr 'asciidoctor-version'} (Bespoke.js converter)"
+    - if attr? :favicon
+      - if (_favicon_href = attr :favicon).empty?
+        - _favicon_href = 'favicon.ico'
+      - if (_favicon_image_type = File.extname(_favicon_href)[1..-1]) == 'ico'
+        - _favicon_image_type = 'x-icon'
+      link rel='shortcut icon' href=_favicon_href type="image/#{_favicon_image_type}"
+    meta name='mobile-web-app-capable' content='yes'
+    - if attr? :appname
+      meta name='application-name' content=(attr :appname)
     link rel='stylesheet' href='build/build.css'
     - if attr? :icons, 'font'
       - if attr? 'iconfont-remote'
@@ -26,7 +34,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
   body id=id
     article.deck
       - unless noheader
-        / TODO enable once Asciidoctor 1.5.5 is available
+        / TODO enable :header docinfo once Asciidoctor 1.5.5 is available
         /- unless (_docinfo = docinfo :header, '-bespoke.html').empty?
         /  =_docinfo
         - if header?
