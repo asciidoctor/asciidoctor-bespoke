@@ -77,12 +77,16 @@ module Slim::Helpers
     nil
   end
 
-  def cdn_uri name, version, path = nil
-    unless instance_variable_defined? :@asset_uri_scheme
-      @asset_uri_scheme = (scheme = attr 'asset-uri-scheme', 'https').nil_or_empty? ? nil : %(#{scheme}:)
+  def asset_uri_scheme
+    if instance_variable_defined? :@asset_uri_scheme
+      @asset_uri_scheme
+    else
+      @asset_uri_scheme = (scheme = @document.attr 'asset-uri-scheme', 'https').nil_or_empty? ? nil : %(#{scheme}:)
     end
+  end
 
-    [%(#{@asset_uri_scheme}#{CDN_BASE}), name, version, path].compact * '/'
+  def cdn_uri name, version, path = nil
+    [%(#{asset_uri_scheme}#{CDN_BASE}), name, version, path].compact * '/'
   end
 
   #--
