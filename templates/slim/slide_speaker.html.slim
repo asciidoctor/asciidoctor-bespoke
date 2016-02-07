@@ -7,8 +7,7 @@ section.speaker id=_id class=role data-title=(local_attr 'reftext')
     h2 contenteditable=_editable spellcheck=_spellcheck =_author
     h3 contenteditable=_editable spellcheck=_spellcheck =document.attr :position
   figure.image.headshot
-    img src=(image_uri document.attr(:avatar)) alt=_author
+    img src=(image_uri document.attr :avatar) alt=_author
   p.contact contenteditable=_editable spellcheck=_spellcheck #{document.attr :twitter} | #{document.attr :email}
-  / FIXME what about the speaker notes?
   - unless (_content = content).empty?
     =_content
