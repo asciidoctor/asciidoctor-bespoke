@@ -9,7 +9,7 @@ figure.video class=_service id=id class=role
     - _params = ['api=1', %(player_id=#{_player_id}), 'badge=0', 'portrait=0', 'title=0', 'byline=0']
     - _params << 'loop=1' if option? :loop
     - _src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{local_attr :target}?#{_params * '&amp;'})
-    iframe id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen)
+    iframe id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen) data-volume=((option? :muted) ? 0 : (local_attr :volume))
   - when 'youtube'
     - _target = local_attr :target
     - _params = ['enablejsapi=1', 'rel=0', 'showinfo=0', 'controls=0', 'disablekb=1']
