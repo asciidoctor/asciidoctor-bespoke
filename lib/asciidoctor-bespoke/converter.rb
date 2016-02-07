@@ -34,10 +34,10 @@ module Bespoke
     end
 
     def convert node, transform = nil, opts = {}
-      if node.attributes.delete 'skip-option'
+      if (node.attributes.delete 'skip-option') || node.context == :preamble
         ''
       # FIXME mixin slide? method to AbstractBlock (or AbstractNode)
-      elsif node.block? && (node.attr? 'transform') && node.context == :section && node.level == 1
+      elsif node.context == :section && node.level == 1 && (node.attr? 'transform')
         super node, %(slide_#{node.attr 'transform'}), opts
       else
         super
