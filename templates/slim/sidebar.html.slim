@@ -1,4 +1,7 @@
 - if has_role? 'cue'
   include notes.html.slim
 - else
-  =delegate
+  aside id=id class=role
+    - if title?
+      h1=title
+    =resolve_content
