@@ -1,5 +1,5 @@
 - _has_title = title?
-- content_for :list
+- content_for :ul
   ul id=(id unless _has_title) class=[style, ('fit' if (_fit = option? :fit)), *build_roles, role]
     - items.each do |_item|
       li class=('line' if _fit)
@@ -9,6 +9,6 @@
 - if _has_title
   figure.list.unordered id=id
     figcaption=title
-    - yield_content :list
+    - yield_content :ul
 - else
-  - yield_content :list
+  - yield_content :ul
