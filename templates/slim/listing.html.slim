@@ -1,8 +1,15 @@
-- if style == 'source'
-  - if (_language = local_attr :language)
+- _has_title = title?
+- content_for :pre
+  - if style == 'source' && (_lang = local_attr :language)
     / NOTE class attribute required for highlight.js and prettify
-    pre.source : code data-lang=_language class="language-#{_language} prettyprint" =content
+    / QUESTION should we add a "highlight" class to pre?
+    pre.source id=(id unless _has_title) : code data-lang=_lang class="language-#{_lang} prettyprint" =content
   - else
-    pre.listing=content
+    / QUESTION should we add a class to pre?
+    pre id=(id unless _has_title) : code =content
+- if _has_title
+  figure.listing id=id
+    figcaption=title
+    - yield_content :pre
 - else
-  include literal.html.slim
+  - yield_content :pre
