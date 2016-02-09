@@ -1,6 +1,14 @@
-ol id=id class=[(style unless style == 'arabic'), ('fit' if (_fit = option? :fit)), *build_roles, role]
-  - items.each do |_item|
-    li class=('line' if _fit)
-      span.primary=_item.text
-      - if _item.blocks?
-        =_item.content
+- _has_title = title?
+- content_for :list
+  ol id=id class=[(style unless style == 'arabic'), ('fit' if (_fit = option? :fit)), *build_roles, role] reversed=('true' if option? :reversed)
+    - items.each do |_item|
+      li class=('line' if _fit)
+        span.primary=_item.text
+        - if _item.blocks?
+          =_item.content
+- if _has_title
+  figure.list.ordered id=id
+    figcaption=title
+    - yield_content :list
+- else
+  - yield_content :list
