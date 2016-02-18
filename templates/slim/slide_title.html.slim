@@ -38,8 +38,11 @@ section.title id=header.id class=[role, ('image' if _bg_img)] style=_style data-
             span.contact
               - if attr? :twitter
                 span.twitter=>attr :twitter
-              - if (attr? :email) && (((_url = attr :email).start_with? 'http://') || (_url.start_with? 'https://'))
-                span.url=_url[((_url.index '//') + 2)..-1]
+              - if (attr? :email)
+                - if (((_val = attr :email).start_with? 'http://') || (_val.start_with? 'https://'))
+                  span.url=_val[((_val.index '//') + 2)..-1]
+                - else
+                  span.email=_val
         /- if attr? :hashtag
         /  p.meta: span.hashtag=attr :hashtag
   - if (header.option? :enclose) || (document.attr? 'enclose-option')
