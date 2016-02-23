@@ -1,4 +1,4 @@
-- _target, _alt, _width, _height, _format = (local_attr :target), (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format)
+- _target, _alt, _width, _height, _format, _reload = (local_attr :target), (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format), ('true' if option? :reload)
 / QUESTION support default image role?
 figure.image id=id class=[role, ('flux' if option? :flux)]
   / TODO support link on image
@@ -10,11 +10,11 @@ figure.image id=id class=[role, ('flux' if option? :flux)]
       - when _svg
         =include_svg _target
       - when _obj
-        object type='image/svg+xml' data=(image_uri _target) width=_width height=_height
+        object type='image/svg+xml' data=(image_uri _target) width=_width height=_height data-reload=_reload
           / TODO support fallback option
           span.alt=_alt
     - else
-      img src=(image_uri _target) alt=_alt width=_width height=_height
+      img src=(image_uri _target) alt=_alt width=_width height=_height data-reload=_reload
   - if title?
     =newline
     figcaption=title
