@@ -1,4 +1,7 @@
+/ add support for %rewind option (data-rewind) and volume attribute (data-volume)
 - _service = (%w(vimeo youtube) & [(local_attr :poster)])[0]
+- _rew = (option? :rewind) ? 'true' : nil
+- _vol = (option? :muted) ? 0 : (attr :volume)
 figure.video class=_service id=id class=role
   - case _service
   - when 'vimeo'
@@ -9,7 +12,8 @@ figure.video class=_service id=id class=role
     - _params = ['api=1', %(player_id=#{_player_id}), 'badge=0', 'portrait=0', 'title=0', 'byline=0']
     - _params << 'loop=1' if option? :loop
     - _src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{local_attr :target}?#{_params * '&amp;'})
-    iframe id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen) data-volume=((option? :muted) ? 0 : (local_attr :volume))
+    iframe(id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0
+        allowfullscreen=('true' unless option? :nofullscreen) data-rewind=_rew data-volume=_vol)
   - when 'youtube'
     - _target = local_attr :target
     - _params = ['enablejsapi=1', 'rel=0', 'showinfo=0', 'controls=0', 'disablekb=1']
@@ -20,11 +24,12 @@ figure.video class=_service id=id class=role
     - _params << 'fs=0' if option? :nofullscreen
     - _params << %(hl=#{document.attr :lang}) if document.attr? :lang
     - _src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{_target}?#{_params * '&amp;'})
-    iframe src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0 allowfullscreen=('true' unless option? :nofullscreen) data-volume=((option? :muted) ? 0 : (local_attr :volume))
+    iframe(src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0
+        allowfullscreen=('true' unless option? :nofullscreen) data-rewind=_rew data-volume=_vol)
   - else
     video(src=(media_uri local_attr :target) width=(local_attr :width) height=(local_attr :height)
         poster=((_poster = local_attr :poster).nil_or_empty? ? nil : (media_uri _poster)) preload='auto'
-        controls=('true' if option? :controls) loop=('true' if option? :loop))
+        controls=('true' if option? :controls) loop=('true' if option? :loop) data-rewind=_rew data-volume=_vol)
       span.alt=local_attr :alt, 'Your browser does not support the video element.'
   - if title?
     figcaption=title

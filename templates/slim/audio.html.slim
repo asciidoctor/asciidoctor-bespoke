@@ -1,2 +1,3 @@
-audio id=id src=(media_uri local_attr :target) loop=('true' if option? :loop) preload='auto'
+audio(id=id src=(media_uri local_attr :target) loop=('true' if option? :loop) preload='auto'
+    data-rewind=('true' if option? :rewind) data-volume=((option? :muted) ? 0 : (attr :volume)))
   span.alt=local_attr :alt, 'Your browser does not support the audio element.'
