@@ -45,8 +45,7 @@ For Asciidoctor::
  $ rvm use 2.3.0@main --install --create # (optional)
  $ gem install bundler
 
-Naturally, you'll also need to setup a project for a Bespoke.js project in the normal way.
-
+Naturally, you'll also need to setup a project for a Bespoke.js project just like you would any other Bespoke.js project.
 For now, we recommend using the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
 In the future, we plan to provide a Yeoman generator that integrates {project-name} automatically.
 
@@ -137,7 +136,9 @@ Here's an example of a simple presentation comprised of two slides, a title slid
 
 Believe it or not, that's all it takes to make a presentation!
 
-Here's a close approximation of the HTML the converter generates.
+TIP: To see a complete example of a conventional-style presentation, check out the https://raw.githubusercontent.com/opendevise/bespoke-emulating-shower/master/src/index.adoc[AsciiDoc source] of the https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower] demo.
+
+Here's a close approximation of the HTML the converter generates for the simple presentation shown above.
 
 [source,html]
 ----
@@ -233,7 +234,6 @@ Here's an example of a typical content slide with a heading:
 [source,asciidoc]
 ----
 == Agenda
-
 * Lesson
 * Demo
 * Discussion
@@ -247,7 +247,6 @@ Here's an example:
 [source,asciidoc]
 ----
 == !
-
 image::chart.svg[]
 ----
 
@@ -294,12 +293,12 @@ Here's the JavaScript you'll need to add to your Bespoke.js configuration to act
 ----
 var bespoke = require('bespoke'),
   bullets = require('bespoke-bullets') // <1>
-  //...
+  ...
 
 bespoke.from('article', [
-  //...
+  ...
   bullets('.build,.build-items>*:not(.build-items)'), // <2>
-  //...
+  ...
 ]);
 ----
 <1> Load the bespoke-bullets plugin, assigning it to the `bullets` variable.
@@ -348,7 +347,6 @@ For content that doesn't have a container, such as a paragraph, you'll need to a
 ----
 [%build]
 == Another Topic
-
 [%build]
 A point about this topic.
 ----
@@ -379,7 +377,6 @@ Let's first look at how to show the list all at once on the first "`next`" actio
 ----
 [%build]
 == Another Topic
-
 [build=self]
 * one
 * two
@@ -394,7 +391,6 @@ Now, instead, let's reveal the items in the list one-by-one, but show the first 
 [source,asciidoc]
 ----
 == Another Topic
-
 [build=items]
 * one
 * two
@@ -417,11 +413,60 @@ The effects supported out of the box are as follows:
 
 The CSS in the <<Build Configuration>> section implements these effects.
 
-////
 === Canvas Image
+
+The converter supports adding a background image to a slide while still preserving the semantics of the document.
+If the first content in a slide is a block image, and that image has the role `canvas`, the converter will pluck that image block out of the content and promote it to the background image of the slide.
+
+[source,asciidoc]
+----
+== !
+[.canvas]
+image::background-image.png[]
+----
+
+This feature makes it really easy to create image-only slides that take up the full screen.
+
+By default, the image is configured to cover the slide surface.
+If you want to force the image to be contained within the dimensions of the slide (while preserving the aspect ratio), you can add the role `contain`.
+
+[source,asciidoc]
+----
+== !
+[.contain.canvas]
+image::background-image.png[]
+----
+
+// QUESTION should we allow the role to be specified on the slide instead of the image block?
 
 === Speaker Notes
 
+The converter recognizes designated blocks containing speaker notes and incorporates them into the presentation as hidden elements.
+The speaker notes are then displayed adjacent to the current slide in a presentation console.
+
+You add speaker notes to a slide by nesting them in a sidebar (or admonition) block and adding the role `cue` to that block.
+That block must then be placed at the end of the section for that slide.
+
+[source,asciidoc]
+----
+== Topic
+Visible content.
+
+[.cue]
+****
+Topic is all around us.
+
+Topic has the following benefits:
+
+* Easy to use
+* Easy to scale
+* It's free!
+****
+----
+
+To learn more about how to setup a presentation console, see the https://github.com/opendevise/bespoke-onstage[bespoke-onstage plugin].
+
+////
 === SVG Embedding
 
 === Enclose Option
@@ -454,6 +499,12 @@ Once the server is running, you can view the slides by navigating to \http://loc
 
 TODO
 ////
+
+== Sample Presentations
+
+* https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower]
+* https://github.com/opendevise/bespoke-emulating-ioslides[Bespoke.js Emulating ioslides]
+* https://github.com/opendevise/presentation-service-workers[Service Workers], a presentation by Hubert Sablonnière, ported from DZSlides
 
 == About the Project
 
