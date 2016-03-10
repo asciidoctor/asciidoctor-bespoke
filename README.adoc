@@ -24,9 +24,11 @@ In other words, it allows you to use AsciiDoc in place of HTML (or an HTML templ
 This converter works as part of the typical Gulp-based build for a Bespoke.js project.
 You still need the build in order to manage dependencies, combine and "`browserify`" the JavaScript, compile the CSS, convert the AsciiDoc to HTML and either run the preview server or publish the final product.
 
+This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation.
+
 == Prerequisites
 
-In order to use this converter, you must satisify the prerequisites of both Asciidoctor and Bespoke.js.
+In order to use this converter, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
 
 For Bespoke.js::
 . https://nodejs.org[Node.js] >= 0.12{void}footnote:[We strongly recommend using https://github.com/creationix/nvm[nvm] to manage Node.]
@@ -43,8 +45,7 @@ For Asciidoctor::
  $ rvm use 2.3.0@main --install --create # (optional)
  $ gem install bundler
 
-This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation.
-Naturally, you'll need to setup a project for a Bespoke.js project in the normal way.
+Naturally, you'll also need to setup a project for a Bespoke.js project in the normal way.
 
 For now, we recommend using the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
 In the future, we plan to provide a Yeoman generator that integrates {project-name} automatically.
@@ -54,7 +55,7 @@ In the future, we plan to provide a Yeoman generator that integrates {project-na
 Once you've initialized your Bespoke.js project, the next step is to replace Jade with AsciiDoc.
 
 The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the project.
-Populate the file with the following content:
+Populate this file with the following content:
 
 [source,ruby]
 ----
@@ -66,12 +67,12 @@ gem 'asciidoctor-bespoke', '1.0.0.alpha.1'
 #gem 'asciidoctor-bespoke', github: 'asciidoctor/asciidoctor-bespoke'
 ----
 
-Next, run `bundle` from the root of the project to install the gem and its dependencies:
+Next, run `bundle` from the root of the project to install the gems and their dependencies:
 
  $ bundle
 
 The next step is to get the converter to generate the HTML from AsciiDoc when the rest of the presentation is built.
-We'll repurpose the existing html task for this purpose.
+We'll repurpose the task that currently generates HTML from Jade for this purpose.
 
 Open [.path]_package.json_ and add the following entries to the `devDependencies` section:
 
@@ -89,7 +90,7 @@ Open [.path]_gulpfile.js_ and add the following entries to the list of requires 
   chmod = require('gulp-chmod'),
   exec = require('gulp-exec'),
 
-Next, remove the existing html task and replace it with this one:
+In the same file, remove the existing `html` task and replace it with the one below:
 
 [source,js]
 gulp.task('html', ['clean:html'], function() {
@@ -113,17 +114,18 @@ and replace it with:
 [source,js]
   gulp.watch('src/**/*.adoc', ['html']);
 
-Before we can use our new task, we need to create new slide content in AsciiDoc.
+The build is now ready.
+But, before we can use our new task, we need to create slide content in AsciiDoc.
 
 == Creating Slides in AsciiDoc
 
-Writing AsciiDoc for creating slides is pretty much the same as writing AsciiDoc for any another purpose.
+Writing AsciiDoc to create slides is pretty much the same as writing AsciiDoc for any another purpose.
 There are two key differences.
-You should write _a lot less_ content and you should only use one level of section headings.
+You should write _a lot_ less content and you should only use one level of section headings.
 
 === Hello, Bespoke.js!
 
-Here's an example of a basic presentation comprised of two slides, a title slide and one content slide.
+Here's an example of a simple presentation comprised of two slides, a title slide and one content slide.
 
 [source,asciidoc]
 ----
@@ -135,7 +137,7 @@ Here's an example of a basic presentation comprised of two slides, a title slide
 
 Believe it or not, that's all it takes to make a presentation!
 
-Here's an approximation of the HTML the converter generates.
+Here's a close approximation of the HTML the converter generates.
 
 [source,html]
 ----
@@ -162,9 +164,9 @@ Here's an approximation of the HTML the converter generates.
 </html>
 ----
 
-There are a couple of things you should notice:
+There are a few things you should notice:
 
-* Each slide is represented by a `<section>`, which is created for each a section title.
+* Each slide is represented by a `<section>`, which is created from each section title.
   - At runtime, Bespoke.js will add additional classes to each `<section>`, including `bespoke-slide`.
 * The title slide has the class `title` and uses an `<h1>` heading.
 * The section title for each content slide goes in an `<h2>` heading.
@@ -176,9 +178,9 @@ Of course, this is not a very interesting presentation, so let's dig a bit deepe
 
 === The Title Slide
 
-By default, the converter automatically creates a title slide from the document header and preamble.
+By default, the converter automatically creates a title slide from the document header and, if present, the preamble.
 The document title (i.e., doctitle) becomes an `<h1>` heading.
-The slide then incorporates additional information from the following attributes and nodes (subject to change):
+The slide then incorporates information from the following attributes and nodes (subject to change):
 
 * firstname (derived from the author attribute)
 * lastname (derived from the author attribute)
@@ -189,7 +191,7 @@ The slide then incorporates additional information from the following attributes
 * avatar (an image path relative to imagesdir)
 * preamble content
 
-Here's an example AsciiDoc file that generates a full-populated title slide:
+Here's an example of an AsciiDoc document that generates a title slide that is fully populated:
 
 [source,asciidoc]
 ----
@@ -206,7 +208,7 @@ Additional content for title slide.
 == First Topic
 ----
 
-If you don't want the title slide to be created automatically, add the `noheader` attribute to the document header or don't include a document header.
+If you don't want the title slide to be created automatically, add the `noheader` attribute to the document header (or simply don't include a document header).
 
 .A presentation without a title slide
 [source,asciidoc,subs=+quotes]
@@ -225,10 +227,23 @@ Each content slide is created from a level-1 section title.
 The section title becomes an `<h2>` heading.
 The remainder of the content in the section is placed below this heading.
 
-While many of your slides may have a primary heading, perhaps as the only content on the slide, there are many types of slides that don't require a heading.
-You can delinate a slide without creating a heading by using `!` as the section title.
+Here's an example of a typical content slide with a heading:
+
+.A slide with a heading and content
+[source,asciidoc]
+----
+== Agenda
+
+* Lesson
+* Demo
+* Discussion
+----
+
+While many of your slides may have a primary heading--perhaps as the only content on the slide--there are many slide types that don't require a heading.
+You can indicate a slide without a heading by using `!` as the section title.
 Here's an example:
 
+.A slide with only content (i.e., an anonymous slide)
 [source,asciidoc]
 ----
 == !
@@ -238,6 +253,7 @@ image::chart.svg[]
 
 If you want to give the slide a title, but just not show it, you can use the `conceal` option.
 
+.A slide with a concealed heading
 [source,asciidoc]
 ----
 [%conceal]
@@ -248,6 +264,7 @@ image::chart.svg[]
 
 A shorthand for the conceal option is to prefix the section title with a `!`.
 
+.A shorthand for concealing the heading of a slide
 [source,asciidoc]
 ----
 = !An Amazing Chart
