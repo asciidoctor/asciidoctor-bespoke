@@ -211,11 +211,11 @@ Additional content for title slide.
 If you don't want the title slide to be created automatically, add the `noheader` attribute to the document header (or simply don't include a document header).
 
 .A presentation without a title slide
-[source,asciidoc,subs=+quotes]
+[source,asciidoc]
 ----
 = My Awesome Presentation
 :!sectids:
-*:noheader:*
+:noheader:
 
 == First Topic
 ----
