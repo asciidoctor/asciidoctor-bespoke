@@ -1,21 +1,452 @@
 = {project-name}
 Dan Allen <https://github.com/mojavelinux>
+// Settings:
+:idprefix:
+:idseparator: -
+:toc: preamble
+:toclevels: 2
 // Aliases:
 :project-name: asciidoctor-bespoke
+:void:
 // URIs:
-:uri-asciidoc: http://asciidoc.org
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
+:uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
-A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML part of a {uri-bespoke}[Bespoke.js] presentation from an {uri-asciidoc}[AsciiDoc] source file.
+A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from an AsciiDoc source file.
 
-== Authors
+== Overview
+
+{project-name} enables you to create HTML-based presentations without having to suffer the tedium of writing HTML by hand.
+This converter is responsible for generating the HTML component of a Bespoke.js presentation from a master AsciiDoc document.
+In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your presentation project.
+
+This converter works as part of the typical Gulp-based build for a Bespoke.js project.
+You still need the build in order to manage dependencies, combine and "`browserify`" the JavaScript, compile the CSS, convert the AsciiDoc to HTML and either run the preview server or publish the final product.
+
+== Prerequisites
+
+In order to use this converter, you must satisify the prerequisites of both Asciidoctor and Bespoke.js.
+
+For Bespoke.js::
+. https://nodejs.org[Node.js] >= 0.12{void}footnote:[We strongly recommend using https://github.com/creationix/nvm[nvm] to manage Node.]
+. http://gulpjs.com[Gulp] (command line interface only)
+
+ $ npm install -g gulp-cli
+
+For Asciidoctor::
++
+[start=3]
+. https://www.ruby-lang.org[Ruby] >= 2{void}footnote:[We strongly recommend using http://rvm.io[RVM] to manage Ruby.]
+. http://bundler.io[Bundler]
+
+ $ rvm use 2.3.0@main --install --create # (optional)
+ $ gem install bundler
+
+This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation.
+Naturally, you'll need to setup a project for a Bespoke.js project in the normal way.
+
+For now, we recommend using the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
+In the future, we plan to provide a Yeoman generator that integrates {project-name} automatically.
+
+== Integrating AsciiDoc into a Bespoke.js Project
+
+Once you've initialized your Bespoke.js project, the next step is to replace Jade with AsciiDoc.
+
+The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the project.
+Populate the file with the following content:
+
+[source,ruby]
+----
+source 'https://rubygems.org'
+
+gem 'asciidoctor', '1.5.4'
+gem 'asciidoctor-bespoke', '1.0.0.alpha.1'
+# To use the latest version from git, use the following line instead
+#gem 'asciidoctor-bespoke', github: 'asciidoctor/asciidoctor-bespoke'
+----
+
+Next, run `bundle` from the root of the project to install the gem and its dependencies:
+
+ $ bundle
+
+The next step is to get the converter to generate the HTML from AsciiDoc when the rest of the presentation is built.
+We'll repurpose the existing html task for this purpose.
+
+Open [.path]_package.json_ and add the following entries to the `devDependencies` section:
+
+[source,js]
+    "gulp-chmod": "^1.3.0",
+    "gulp-exec": "^2.1.2",
+
+Save the file and run `npm i` to install the new packages into your project:
+
+ $ npm i
+
+Open [.path]_gulpfile.js_ and add the following entries to the list of requires at the top:
+
+[source,js]
+  chmod = require('gulp-chmod'),
+  exec = require('gulp-exec'),
+
+Next, remove the existing html task and replace it with this one:
+
+[source,js]
+gulp.task('html', ['clean:html'], function() {
+  return gulp.src('src/index.adoc')
+    .pipe(isDist ? through() : plumber())
+    .pipe(exec('asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true }))
+    .pipe(exec.reporter({ stdout: false }))
+    .pipe(rename('index.html'))
+    .pipe(chmod(644))
+    .pipe(gulp.dest('dist'))
+    .pipe(connect.reload());
+});
+
+Finally, if you want the build to watch the AsciiDoc file(s) for changes, look for the following line in the watch task:
+
+[source,js]
+  gulp.watch('src/**/*.jade', ['html']);
+
+and replace it with:
+
+[source,js]
+  gulp.watch('src/**/*.adoc', ['html']);
+
+Before we can use our new task, we need to create new slide content in AsciiDoc.
+
+== Creating Slides in AsciiDoc
+
+Writing AsciiDoc for creating slides is pretty much the same as writing AsciiDoc for any another purpose.
+There are two key differences.
+You should write _a lot less_ content and you should only use one level of section headings.
+
+=== Hello, Bespoke.js!
+
+Here's an example of a basic presentation comprised of two slides, a title slide and one content slide.
+
+[source,asciidoc]
+----
+= My Awesome Presentation
+:!sectids:
+
+== First Topic
+----
+
+Believe it or not, that's all it takes to make a presentation!
+
+Here's an approximation of the HTML the converter generates.
+
+[source,html]
+----
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Awesome Presentation</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="build/build.css">
+  </head>
+  <body>
+    <article class="deck">
+      <section class="title">
+        <h1>My Awesome Presentation</h1>
+      </section>
+      <section>
+        <h2>First Topic</h2>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+  </body>
+</html>
+----
+
+There are a couple of things you should notice:
+
+* Each slide is represented by a `<section>`, which is created for each a section title.
+  - At runtime, Bespoke.js will add additional classes to each `<section>`, including `bespoke-slide`.
+* The title slide has the class `title` and uses an `<h1>` heading.
+* The section title for each content slide goes in an `<h2>` heading.
+* The presentation is wrapped in an `<article>` element with the class `deck`.
+  - At runtime, Bespoke.js will add additional classes to `<article>`, including `bespoke-parent`.
+* The JavaScript and CSS to power the Bespoke.js presentation are loaded from the [.path]_build_ folder.
+
+Of course, this is not a very interesting presentation, so let's dig a bit deeper.
+
+=== The Title Slide
+
+By default, the converter automatically creates a title slide from the document header and preamble.
+The document title (i.e., doctitle) becomes an `<h1>` heading.
+The slide then incorporates additional information from the following attributes and nodes (subject to change):
+
+* firstname (derived from the author attribute)
+* lastname (derived from the author attribute)
+* email (can be a URL)
+* position
+* organization
+* twitter
+* avatar (an image path relative to imagesdir)
+* preamble content
+
+Here's an example AsciiDoc file that generates a full-populated title slide:
+
+[source,asciidoc]
+----
+= My Awesome Presentation
+Author Name <http://example.com>
+:organization: ACME Inc.
+:position: Developer Advocate
+:twitter: @asciidoctor
+:avatar: author-avatar.png
+:!sectids:
+
+Additional content for title slide.
+
+== First Topic
+----
+
+If you don't want the title slide to be created automatically, add the `noheader` attribute to the document header or don't include a document header.
+
+.A presentation without a title slide
+[source,asciidoc,subs=+quotes]
+----
+= My Awesome Presentation
+:!sectids:
+*:noheader:*
+
+== First Topic
+----
+
+=== Content Slides
+
+Each content slide is created from a level-1 section title.
+(Any levels below level-1 will simply be used as slide content).
+The section title becomes an `<h2>` heading.
+The remainder of the content in the section is placed below this heading.
+
+While many of your slides may have a primary heading, perhaps as the only content on the slide, there are many types of slides that don't require a heading.
+You can delinate a slide without creating a heading by using `!` as the section title.
+Here's an example:
+
+[source,asciidoc]
+----
+== !
+
+image::chart.svg[]
+----
+
+If you want to give the slide a title, but just not show it, you can use the `conceal` option.
+
+[source,asciidoc]
+----
+[%conceal]
+= An Amazing Chart
+
+image::chart.svg[]
+----
+
+A shorthand for the conceal option is to prefix the section title with a `!`.
+
+[source,asciidoc]
+----
+= !An Amazing Chart
+
+image::chart.svg[]
+----
+
+=== Builds
+
+One of the most common ways to control the rate at which content is shown in a presentation is to use builds.
+A [.term]_build_ is a presentation technique in which fragments of content are revealed incrementally (usually triggered by an event such as a button press or time delay).
+The AsciiDoc converter supports a variety of ways to add builds to your presentation.
+
+The build mechanism itself is handled by a Bespoke.js plugin (e.g., bespoke-bullets) with the help of some CSS.
+You'll then use metadata in the AsciiDoc file to indicate which content should participate in a build.
+
+The two ways to enlist content in a build are the build option and the build attribute.
+The first should handle most situations, while the latter enables you to fine-tune the behavior.
+
+Before diving into that metadata, we first need to do a bit of configuration.
+
+==== Build Configuration
+
+Here's the JavaScript you'll need to add to your Bespoke.js configuration to activate the bespoke-bullets plugin to implement the behavior described in this section.
+
+[source,js]
+----
+var bespoke = require('bespoke'),
+  bullets = require('bespoke-bullets') // <1>
+  //...
+
+bespoke.from('article', [
+  //...
+  bullets('.build,.build-items>*:not(.build-items)'), // <2>
+  //...
+]);
+----
+<1> Load the bespoke-bullets plugin, assigning it to the `bullets` variable.
+<2> Activate the bespoke-bullets plugin, using a CSS selector to query for buildable content.
+
+Here's the CSS necessary to handle the visibility of build items and introduce several build effects.
+You can customize the styles to your liking.
+
+[source,css]
+----
+.bespoke-bullet:not(.bespoke-bullet-active) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.fade .bespoke-bullet-active:not(.bespoke-bullet-current) {
+  opacity: 0.1;
+}
+
+.vanish .bespoke-bullet-active:not(.bespoke-bullet-current) {
+  visibility: hidden;
+}
+----
+
+==== The build Option
+
+Let's assume you have an unordered list on one of your slides and you want to reveal the items one-by-one.
+Simply declare the build option on the list.
+
+[source,asciidoc]
+----
+[%build]
+* one
+* two
+* three
+----
+
+When the slide is first loaded, none of the items will be visible.
+(The list container itself is the active build item).
+Each time you press the button or key mapped to the "`next`" action, another item in the list will be revealed.
+Past items will remain visible.
+
+For content that doesn't have a container, such as a paragraph, you'll need to also add the build option to the section.
+
+[source,asciidoc]
+----
+[%build]
+== Another Topic
+
+[%build]
+A point about this topic.
+----
+
+The first build is automatically activated on slide entry.
+Therefore, in order for the build on the paragraph to be deferred, the section title needs to be marked as the first build item.
+
+At some point, you're likely to encounter a build permutation that can't be described using the option alone.
+That's where the build attribute comes in.
+
+==== The build Attribute
+
+The build attribute is used to describe more complex build scenarios.
+Right now, it supports the following values (though more may be added in the futrue):
+
+self:: The block itself should be enlisted in the build, but not its children.
+items:: The block's children should be enlisted in the build, but not the block itself.
+self+items (equivalent to the build option):: The block and its children should be enlisted in the build.
+
+Using the build attribute, we can tackle the following two cases:
+
+* Show the list all at once.
+* Show the first item in the list on slide entry.
+
+Let's first look at how to show the list all at once on the first "`next`" action.
+
+[source,asciidoc]
+----
+[%build]
+== Another Topic
+
+[build=self]
+* one
+* two
+* three
+----
+
+The section title is the first build step, which is automatically activated on slide entry.
+The next build step is the list as a whole.
+
+Now, instead, let's reveal the items in the list one-by-one, but show the first item on slide entry.
+
+[source,asciidoc]
+----
+== Another Topic
+
+[build=items]
+* one
+* two
+* three
+----
+
+In this case, the first item in the list is the auto-activated build step.
+The next build step is the second item in the list.
+
+As you can see, the build attribute gives you more fine-grained control over the build behavior.
+
+=== Build Roles
+
+You can use CSS to introduce additional build effects.
+The effects supported out of the box are as follows:
+
+* fade
+* vanish
+* replace (pending)
+
+The CSS in the <<Build Configuration>> section implements these effects.
+
+////
+=== Canvas Image
+
+=== Speaker Notes
+
+=== SVG Embedding
+
+=== Enclose Option
+
+=== Slice and Fit
+////
+
+== Building the Presentation
+
+=== Standalone Version
+
+You can build a static version of the slides using the following command:
+
+ $ gulp
+
+The files are built into the _dist_ directory.
+You can then view the slides by navigating to _dist/index.html_ in your browser.
+
+=== Local Preview Server
+
+If you use the local preview server, the build will monitor the project files for changes and automatically refresh the presentation in the browser when a change is detected.
+You can launch the preview server using:
+
+ $ gulp serve
+
+Once the server is running, you can view the slides by navigating to \http://localhost:8000 in your browser.
+
+////
+== Publishing
+
+TODO
+////
+
+== About the Project
+
+=== Authors
 
 {project-name} was written by {email}[{author}].
 
-== Copyright
+=== Copyright
 
 Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
-See the link:LICENSE.adoc[LICENSE] file for details.
+See the <<LICENSE#,LICENSE>> file for details.
