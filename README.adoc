@@ -7,13 +7,12 @@ Dan Allen <https://github.com/mojavelinux>
 :toclevels: 2
 // Aliases:
 :project-name: asciidoctor-bespoke
-:void:
 // URIs:
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
-A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from an AsciiDoc source file.
+A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
 
 == Overview
 
@@ -22,7 +21,7 @@ This converter is responsible for generating the HTML component of a Bespoke.js 
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
 
 This converter works as part of the typical Gulp-based build for a Bespoke.js project.
-You still need the build in order to manage dependencies, combine and "`browserify`" the JavaScript, compile the CSS, convert the AsciiDoc to HTML and either run the preview server or publish the final product.
+You still need the build in order to manage dependencies, combine and "`browserify`" the JavaScript, compile the CSS, convert the AsciiDoc to HTML, run the preview server and publish the result.
 
 This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation.
 
@@ -31,7 +30,7 @@ This guide explains how to integrate the {project-name} converter into an existi
 In order to use this converter, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
 
 For Bespoke.js::
-. https://nodejs.org[Node.js] >= 0.12{void}footnote:[We strongly recommend using https://github.com/creationix/nvm[nvm] to manage Node.]
+. https://nodejs.org[Node.js] >= 0.12 footnote:[We strongly recommend using https://github.com/creationix/nvm[nvm] to manage Node.]
 . http://gulpjs.com[Gulp] (command line interface only)
 
  $ npm install -g gulp-cli
@@ -39,7 +38,7 @@ For Bespoke.js::
 For Asciidoctor::
 +
 [start=3]
-. https://www.ruby-lang.org[Ruby] >= 2{void}footnote:[We strongly recommend using http://rvm.io[RVM] to manage Ruby.]
+. https://www.ruby-lang.org[Ruby] >= 2 footnote:[We strongly recommend using http://rvm.io[RVM] to manage Ruby.]
 . http://bundler.io[Bundler]
 
  $ rvm use 2.3.0@main --install --create # (optional)
@@ -470,6 +469,8 @@ To learn more about how to setup a presentation console, see the https://github.
 === SVG Embedding
 
 === Enclose Option
+
+=== Slide Templates
 
 === Slice and Fit
 ////
