@@ -505,6 +505,7 @@ TODO
 * https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower]
 * https://github.com/opendevise/bespoke-emulating-ioslides[Bespoke.js Emulating ioslides]
 * https://github.com/opendevise/presentation-service-workers[Service Workers], a presentation by Hubert Sablonnière, ported from DZSlides
+* https://github.com/opendevise/neo4j-slide-types[Neo4j Slide Types]
 
 == About the Project
 
