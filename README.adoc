@@ -465,12 +465,94 @@ Topic has the following benefits:
 
 To learn more about how to setup a presentation console, see the https://github.com/opendevise/bespoke-onstage[bespoke-onstage plugin].
 
+=== Custom Transforms
+
+While conversion from AsciiDoc is meant to save time when producing common slide types, there are cases when you find yourself going against the grain or exceeding the limits of what CSS can handle.
+This situation is normal.
+The truth is, certain slides require an HTML layout that is tailored to the content.
+In these cases, you can use a custom transform.
+
+You can delegate the conversion of a slide to a custom template by specifying the `transform` attribute.
+The converter will then look for a template file that follows the pattern `slide_<transform>.html.slim`, where `<transform>` is the value of this attribute, inside the directory (or directories) specified by the `template_dir(s)` option.
+
+Let's assume you want to create a custom presenter slide.
+First, create a placeholder slide in the AsciiDoc and specify a custom transform.
+
+[source,asciidoc]
+----
+[transform=presenter]
+== Presenter
+----
+
+Next, create a file named [.path]_slide_presenter.html.slim_ in the directory that holds your templates.
+The template is responsible for creating the `<section>` element for the slide.
+(In fact, there's nothing stopping you from creating multiple slides).
+
+.slide_presenter.html.slim
+[source,slim]
+----
+section.presenter id=id class=role
+  header
+    h2=document.attr :author
+    h3=document.attr :position
+  figure.image.headshot
+    img src=(image_uri document.attr :avatar) alt=(document.attr :author)
+  - unless (_content = content).empty?
+    =_content
+----
+
+Finally, when you invoke the converter, you must specify the location of the template file using the `-T` option:
+
+ $ asciidoctor-bespoke -T src/templates src/index.adoc
+
+Since you can access the entire document model of the parsed AsciiDoc in the template, you are free to pick and choose the content you want to add to the slide and in what order.
+
+Let's look at an example that draws from the document model selectively.
+Assume you want to create one slide per item in a list.
+
+[source,asciidoc]
+----
+[transform=one_per_slide]
+== !
+* one
+* two
+* three
+----
+
+Here's a template that implements this behavior:
+
+.slide_one_per_slide.html.slim
+[source,slim]
+----
+- blocks.first.items.each do |_item|
+  section
+    p=_item.text
+----
+
+This template applied to the previous slide content will generate the following HTML:
+
+[source,html]
+----
+<section>
+<p>one</p>
+</section>
+<section>
+<p>two</p>
+</section>
+<section>
+<p>three</p>
+</section>
+----
+
+As you can see, there's no reason you have to stick to a 1-to-1 mapping between what is in the AsciiDoc file and the slide(s) you're generating.
+The custom transform gives you the flexibility to layout the content on the slide exactly how you want.
+
 ////
+=== Speaker Slide
+
 === SVG Embedding
 
 === Enclose Option
-
-=== Slide Templates
 
 === Slice and Fit
 ////
