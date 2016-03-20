@@ -587,13 +587,13 @@ This template applied to the previous slide content will generate the following 
 [source,html]
 ----
 <section>
-<p>one</p>
+  <p>one</p>
 </section>
 <section>
-<p>two</p>
+  <p>two</p>
 </section>
 <section>
-<p>three</p>
+  <p>three</p>
 </section>
 ----
 
