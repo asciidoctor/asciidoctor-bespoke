@@ -6,6 +6,7 @@ Dan Allen <https://github.com/mojavelinux>
 :toc: preamble
 :toclevels: 2
 ifdef::env-github[]
+:!toc-title:
 :caution-caption: :fire:
 :important-caption: :exclamation:
 :note-caption: :clipboard:
