@@ -5,6 +5,13 @@ Dan Allen <https://github.com/mojavelinux>
 :idseparator: -
 :toc: preamble
 :toclevels: 2
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :clipboard:
+:tip-caption: :bulb:
+:warning-caption: :warn:
+endif::[]
 // Aliases:
 :project-name: asciidoctor-bespoke
 // URIs:
