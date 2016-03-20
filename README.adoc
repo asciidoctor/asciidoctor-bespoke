@@ -10,6 +10,11 @@ Dan Allen <https://github.com/mojavelinux>
 // URIs:
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
+:uri-repo: https://github.com/asciidoctor/asciidoctor-bespoke
+:uri-repo-file-prefix: {uri-repo}/blob/master/
+ifdef::env-github[]
+:uri-repo-file-prefix: link:
+endif::[]
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
 A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
@@ -191,6 +196,8 @@ The slide then incorporates information from the following attributes and nodes 
 * avatar (an image path relative to imagesdir)
 * preamble content
 
+NOTE: The title slide is a built-in transform mapped to the {uri-repo-file-prefix}templates/slim/slide_title.html.slim[slide_title.html.slim] template, which you can override.
+
 Here's an example of an AsciiDoc document that generates a title slide that is fully populated:
 
 [source,asciidoc]
@@ -269,6 +276,46 @@ A shorthand for the conceal option is to prefix the section title with a `!`.
 
 image::chart.svg[]
 ----
+
+=== Speaker Slide
+
+The converter includes an _experimental_ speaker slide, which you can place anywhere in the presentation.
+To activate the speaker slide, create a section with an optional title and add the `transform=speaker` attribute.
+
+[source,asciidoc]
+----
+[transform=speaker]
+== Speaker
+----
+
+The speaker slide currently incorporates the following attributes:
+
+* author
+* position
+* avatar (resolved relative to `imagesdir`)
+* twitter
+* email
+* section content (if any)
+
+NOTE: The speaker slide is a built-in transform mapped to the {uri-repo-file-prefix}templates/slim/slide_speaker.html.slim[slide_speaker.html.slim] template, which you can override.
+
+Here's a rough approximation of the HTML generated for the speaker slide:
+
+[source,html]
+----
+<section class="speaker">
+  <header>
+    <h2>Speaker Name</h2>
+    <h3>Title</h3>
+  </header>
+  <figure class="image headshot">
+    <img src="images/speaker-name.jpg" alt="Speaker Name">
+  </figure>
+  <p class="contact">@speaker | speaker@example.org</p>
+</section>
+----
+
+CAUTION: The speaker slide is labeled as "`experimental`" because the HTML (content and layout) is likely to change as we learn the best way to organize the information.
 
 === Builds
 
@@ -548,13 +595,16 @@ As you can see, there's no reason you have to stick to a 1-to-1 mapping between 
 The custom transform gives you the flexibility to layout the content on the slide exactly how you want.
 
 ////
-=== Speaker Slide
+
+=== General Customization (a custom template can be used for any node)
 
 === SVG Embedding
 
 === Enclose Option
 
 === Slice and Fit
+
+=== Fit Image
 ////
 
 == Building the Presentation
