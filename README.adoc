@@ -271,7 +271,6 @@ If you want to give the slide a title, but just not show it, you can use the `co
 ----
 [%conceal]
 = An Amazing Chart
-
 image::chart.svg[]
 ----
 
@@ -281,7 +280,6 @@ A shorthand for the conceal option is to prefix the section title with a `!`.
 [source,asciidoc]
 ----
 = !An Amazing Chart
-
 image::chart.svg[]
 ----
 
