@@ -512,23 +512,32 @@ You declare an option on the image macro to control which method is used.
 The option values are documented in the table below alongside the HTML element they emit.
 
 .Options for controlling how the SVG is inserted into the HTML output
-[cols="1,1m,2m"]
+[cols="1,1m,2a"]
 |===
 |Option Name |HTML Element |AsciiDoc Example
 
 |_none_ (default)
 |<img>
-|image::sample.svg[]
+|
+----
+image::sample.svg[]
+----
 
 |interactive
 |<object>
-|[%interactive] +
+|
+----
+[%interactive]
 image::sample.svg[]
+----
 
 |inline
 |<svg>
-|[%inline] +
+|
+----
+[%inline]
 image::sample.svg[]
+----
 |===
 
 When using inline or interactive, the `viewBox` attribute must be defined on the root `<svg>` element in order for scaling to work properly
