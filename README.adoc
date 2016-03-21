@@ -18,11 +18,13 @@ endif::[]
 // URIs:
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
+:uri-bespoke-multimedia: https://github.com/opendevise/bespoke-multimedia
 :uri-repo: https://github.com/asciidoctor/asciidoctor-bespoke
 :uri-repo-file-prefix: {uri-repo}/blob/master/
 ifdef::env-github[]
 :uri-repo-file-prefix: link:
 endif::[]
+:uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
 A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
@@ -491,6 +493,70 @@ image::background-image.png[]
 
 // QUESTION should we allow the role to be specified on the slide instead of the image block?
 
+=== Inserting SVGs
+
+Just like for other image types, you use the block and inline image macros to add SVGs to your presentation (via AsciiDoc).
+The difference comes in the fact that you can configure how the SVG is inserted into the HTML output.
+
+The converter supports three ways of inserting an SVG into the HTML of a slide.
+Each method is labeled below by the HTML element that is used:
+
+`<img>`:: The SVG is linked as a rasterized image.
+`<object>`:: The SVG is embedded as a live, interactive object (aka "`content document`").
+`<svg>`:: The SVG is embedded directly into the HTML itself.
+
+There are pros and cons of using each method (which is why the converter supports all three).
+You can read more about the differences between these methods and their tradeoffs by studying the article https://www.smashingmagazine.com/2014/11/styling-and-animating-svgs-with-css/#embedding-svgs[Styling And Animating SVGs with CSS].
+
+You declare an option on the image macro to control which method is used.
+The option values are documented in the table below alongside the HTML element they emit.
+
+.Options for controlling how the SVG is inserted into the HTML output
+[cols="1,1m,2m"]
+|===
+|Option Name |HTML Element |AsciiDoc Example
+
+|_none_ (default)
+|<img>
+|image::sample.svg[]
+
+|interactive
+|<object>
+|[%interactive] +
+image::sample.svg[]
+
+|inline
+|<svg>
+|[%inline] +
+image::sample.svg[]
+|===
+
+TIP: The {uri-bespoke-multimedia}[bespoke-multimedia plugin] automatically adds the CSS class `active` to the root element of all "`interactive`" SVGs on the current slide, so long as the SVG is loaded from the same domain.
+
+WARNING: If you're using the inline method, we strongly recommend you optimize your SVG using a tool like {uri-svgo}[svgo].
+
+So which method should you choose?
+It depends on how you're using the SVG.
+Here are some rules of thumb to follow.
+
+* Does the SVG have builds (aka bullets)? +
+=> Use *inline*.
+* Do you want the SVG content to be reachable by JavaScript from the main DOM? +
+=> Use *inline*.
+* Do you want the SVG content to inherit styles from the main DOM? +
+=> Use *inline*.
+* Does the SVG have CSS animations? +
+=> Use *inline* or *interactive*.
+  - If using interactive, you must use the {uri-bespoke-multimedia}[bespoke-multimedia plugin] to control the animations on slide entry and exit.
+* Does the SVG reference custom fonts (i.e., webfonts)? +
+=> Use *inline* or *interactive*.
+  - If using interactive, you must link to the CSS that declares the fonts in the SVG file using an XML stylesheet declaration.
+* Are you simply using the SVG as a static image (and it doesn't use custom fonts)? +
+=> Use the *default*.
+
+As you work with SVGs in your presentations, you'll become more comfortable making the decision about which method to employ given the circumstances.
+It's only confusing the first couple of times.
+
 === Speaker Notes
 
 The converter recognizes designated blocks containing speaker notes and incorporates them into the presentation as hidden elements.
@@ -601,16 +667,17 @@ As you can see, there's no reason you have to stick to a 1-to-1 mapping between 
 The custom transform gives you the flexibility to layout the content on the slide exactly how you want.
 
 ////
+any global options specific to the Bespoke.js converter
 
-=== General Customization (a custom template can be used for any node)
-
-=== SVG Embedding
+=== General HTML Customization (a custom template can be used for any node)
 
 === Enclose Option
 
 === Slice and Fit
 
 === Fit Image
+
+=== Image Credit
 ////
 
 == Building the Presentation
