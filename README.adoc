@@ -531,9 +531,11 @@ image::sample.svg[]
 image::sample.svg[]
 |===
 
-TIP: The {uri-bespoke-multimedia}[bespoke-multimedia plugin] automatically adds the CSS class `active` to the root element of all "`interactive`" SVGs on the current slide, so long as the SVG is loaded from the same domain.
+When using inline or interactive, the `viewBox` attribute must be defined on the root `<svg>` element in order for scaling to work properly
+When using the inline option, if you specify a width or height on the image macro in AsciiDoc, the `width`, `height` and `style` attributes on the `<svg>` element will be removed.
+If you're inserting an SVG using the inline method, we strongly recommend you optimize your SVG using a tool like {uri-svgo}[svgo].
 
-WARNING: If you're using the inline method, we strongly recommend you optimize your SVG using a tool like {uri-svgo}[svgo].
+TIP: The {uri-bespoke-multimedia}[bespoke-multimedia plugin] automatically adds the CSS class `active` to the root element of all "`interactive`" SVGs on the current slide, so long as the SVG is loaded from the same domain.
 
 So which method should you choose?
 It depends on how you're using the SVG.
