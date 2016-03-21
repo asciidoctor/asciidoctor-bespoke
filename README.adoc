@@ -11,7 +11,7 @@ ifdef::env-github[]
 :important-caption: :exclamation:
 :note-caption: :paperclip:
 :tip-caption: :bulb:
-:warning-caption: :warn:
+:warning-caption: :warning:
 endif::[]
 // Aliases:
 :project-name: asciidoctor-bespoke
