@@ -150,8 +150,6 @@ Here's an example of a simple presentation comprised of two slides, a title slid
 
 Believe it or not, that's all it takes to make a presentation!
 
-TIP: To see a complete example of a conventional-style presentation, check out the https://raw.githubusercontent.com/opendevise/bespoke-emulating-shower/master/src/index.adoc[AsciiDoc source] of the https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower] demo.
-
 Here's a close approximation of the HTML the converter generates for the simple presentation shown above.
 
 [source,html]
@@ -190,6 +188,8 @@ There are a few things you should notice:
 * The JavaScript and CSS to power the Bespoke.js presentation are loaded from the [.path]_build_ folder.
 
 Of course, this is not a very interesting presentation, so let's dig a bit deeper.
+
+TIP: To see a complete example of a conventional-style presentation, check out the https://raw.githubusercontent.com/opendevise/bespoke-emulating-shower/master/src/index.adoc[AsciiDoc source] of the https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower] demo.
 
 === The Title Slide
 
