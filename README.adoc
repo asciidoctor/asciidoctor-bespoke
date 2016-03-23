@@ -64,7 +64,7 @@ If you don't yet have a Bespoke.js project, you can clone the following starter 
 
 You can also use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
 However, as a word of warning, that generator is substantially out of date.
-We plan to provide a Yeoman generator that integrates {project-name} automatically and is kept current.
+We plan to provide an updated Yeoman generator that incorporates {project-name}.
 
 == Integrating AsciiDoc into a Bespoke.js Project
 
