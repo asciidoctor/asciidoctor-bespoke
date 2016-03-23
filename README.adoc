@@ -62,8 +62,9 @@ If you don't yet have a Bespoke.js project, you can clone the provided starter p
 
  $ git clone https://github.com/opendevise/presentation-bespoke-starter
 
-You can also use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project, though at the time of writing that generator is outdated.
-In the future, we plan to provide a Yeoman generator that is kept current and integrates {project-name} automatically.
+You can also use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
+However, as a word of warning, that generator is substantially out of date.
+We plan to provide a Yeoman generator that integrates {project-name} automatically and is kept current.
 
 == Integrating AsciiDoc into a Bespoke.js Project
 
@@ -696,7 +697,7 @@ any global options specific to the Bespoke.js converter
 
 == Building the Presentation
 
-=== Standalone Version
+=== Static Version
 
 You can build a static version of the slides using the following command:
 
