@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   end
 
   s.executables = ['asciidoctor-bespoke']
-  s.extra_rdoc_files = Dir['README.doc', 'LICENSE.adoc']
+  s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc']
   s.require_paths = ['lib']
 
   #s.add_runtime_dependency 'asciidoctor', '~> 1.5.0'
