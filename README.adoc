@@ -25,7 +25,7 @@ ifdef::env-github[:uri-repo-file-prefix: link:]
 :uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
-A template-based converter for {uri-asciidoctor}[Asciidoctor] that produces the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
+A converter for {uri-asciidoctor}[Asciidoctor] that generates the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
 
 == Overview
 

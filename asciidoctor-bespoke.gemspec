@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors = ['Dan Allen']
   s.email = ['dan.j.allen@gmail.com']
   s.homepage = 'https://github.com/asciidoctor/asciidoctor-bespoke'
-  s.summary = 'Converts AsciiDoc to the HTML part of a Bespoke.js presentation'
-  s.description = 'A converter for Asciidoctor that produces the HTML part of a Bespoke.js presentation from an AsciiDoc source file.'
+  s.summary = 'Converts AsciiDoc to the HTML component of a Bespoke.js presentation'
+  s.description = 'A converter for Asciidoctor that generates the HTML component of a Bespoke.js presentation from AsciiDoc.'
   s.license = 'MIT'
   s.required_ruby_version = '>= 1.9.3'
 
