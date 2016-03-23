@@ -22,11 +22,10 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc']
   s.require_paths = ['lib']
 
-  #s.add_runtime_dependency 'asciidoctor', '~> 1.5.0'
+  # QUESTION should asciidoctor be a runtime dependency?
+  s.add_runtime_dependency 'asciidoctor', '>= 1.5.0'
+  s.add_runtime_dependency 'slim', '~> 3.0.6'
+  s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
 
-  s.add_development_dependency 'asciidoctor', '~> 1.5.0'
   s.add_development_dependency 'rake', '~> 10.4.2'
-  s.add_development_dependency 'slim', '~> 3.0.6'
-  s.add_development_dependency 'thread_safe', '~> 0.3.5'
-  s.add_development_dependency 'tilt', '~> 2.0.2'
 end
