@@ -57,8 +57,8 @@ For Asciidoctor::
  $ rvm use 2.3.0@main --install --create # (optional)
  $ gem install bundler
 
-Naturally, you'll also need to setup a project for a Bespoke.js project just like you would any other Bespoke.js project.
-If you don't yet have a Bespoke.js project, you can clone the provided starter project:
+Naturally, you'll also need to setup a Bespoke.js project, just like you would for any other Bespoke.js presentation.
+If you don't yet have a Bespoke.js project, you can clone the following starter project:
 
  $ git clone https://github.com/opendevise/presentation-bespoke-starter
 
