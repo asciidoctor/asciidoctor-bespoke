@@ -110,13 +110,15 @@ In the same file, remove the existing `html` task and replace it with the one be
 gulp.task('html', ['clean:html'], function() {
   return gulp.src('src/index.adoc')
     .pipe(isDist ? through() : plumber())
-    .pipe(exec('asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true }))
+    .pipe(exec('asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true })) // <1>
     .pipe(exec.reporter({ stdout: false }))
     .pipe(rename('index.html'))
     .pipe(chmod(644))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('public'))
     .pipe(connect.reload());
 });
+
+<1> Add `bundle exec` in front of the `asciidoctor-bespoke` command if you're using the development version from git.
 
 Finally, if you want the build to watch the AsciiDoc file(s) for changes, look for the following line in the watch task:
 
