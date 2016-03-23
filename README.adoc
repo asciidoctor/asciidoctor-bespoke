@@ -21,9 +21,7 @@ endif::[]
 :uri-bespoke-multimedia: https://github.com/opendevise/bespoke-multimedia
 :uri-repo: https://github.com/asciidoctor/asciidoctor-bespoke
 :uri-repo-file-prefix: {uri-repo}/blob/master/
-ifdef::env-github[]
-:uri-repo-file-prefix: link:
-endif::[]
+ifdef::env-github[:uri-repo-file-prefix: link:]
 :uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
