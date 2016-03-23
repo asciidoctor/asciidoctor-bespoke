@@ -25,12 +25,12 @@ ifdef::env-github[:uri-repo-file-prefix: link:]
 :uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
-A converter for {uri-asciidoctor}[Asciidoctor] that generates the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
+An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
 
 == Overview
 
-The {project-name} converter enables you to create HTML-based presentations while avoiding the tedium of writing HTML by hand.
-This converter is responsible for generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
+The goal of {project-name} is to enable you to craft HTML-based presentations while bypassing the tedium of writing HTML by hand.
+This converter delivers on that goal by generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
 
 This converter works as part of the typical Gulp-based build for a Bespoke.js project.
