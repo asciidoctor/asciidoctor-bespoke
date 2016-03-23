@@ -60,8 +60,12 @@ For Asciidoctor::
  $ gem install bundler
 
 Naturally, you'll also need to setup a project for a Bespoke.js project just like you would any other Bespoke.js project.
-For now, we recommend using the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
-In the future, we plan to provide a Yeoman generator that integrates {project-name} automatically.
+If you don't yet have a Bespoke.js project, you can clone the provided starter project:
+
+ $ git clone https://github.com/opendevise/presentation-bespoke-starter
+
+You can also use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project, though at the time of writing that generator is outdated.
+In the future, we plan to provide a Yeoman generator that is kept current and integrates {project-name} automatically.
 
 == Integrating AsciiDoc into a Bespoke.js Project
 
