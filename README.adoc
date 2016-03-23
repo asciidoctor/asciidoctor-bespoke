@@ -1,11 +1,14 @@
 = {project-name}
 Dan Allen <https://github.com/mojavelinux>
 // Settings:
+ifndef::env-github[]
+:icons: font
 :idprefix:
 :idseparator: -
+endif::[]
+ifdef::env-github[]
 :toc: preamble
 :toclevels: 2
-ifdef::env-github[]
 :!toc-title:
 :caution-caption: :fire:
 :important-caption: :exclamation:
@@ -15,6 +18,8 @@ ifdef::env-github[]
 endif::[]
 // Aliases:
 :project-name: asciidoctor-bespoke
+:conum-guard-js: //
+ifndef::icons[:conum-guard-js: // //]
 // URIs:
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
@@ -111,11 +116,11 @@ Open [.path]_gulpfile.js_ and add the following entries to the list of requires 
 In the same file, remove the existing `html` task and replace it with the one below:
 
 .gulpfile.js (snippet)
-[source,js]
+[source,js,subs=attributes+]
 gulp.task('html', ['clean:html'], function() {
   return gulp.src('src/index.adoc')
     .pipe(isDist ? through() : plumber())
-    .pipe(exec('asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true })) // <1>
+    .pipe(exec('asciidoctor-bespoke -o - src/index.adoc', { pipeStdout: true })) {conum-guard-js} <1>
     .pipe(exec.reporter({ stdout: false }))
     .pipe(rename('index.html'))
     .pipe(chmod(644))
