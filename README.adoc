@@ -659,7 +659,7 @@ Assume you want to create one slide per item in a list.
 
 [source,asciidoc]
 ----
-[transform=one_per_slide]
+[transform=step_per_slide]
 == !
 * one
 * two
@@ -668,7 +668,7 @@ Assume you want to create one slide per item in a list.
 
 Here's a template that implements this behavior:
 
-.slide_one_per_slide.html.slim
+.slide_step_per_slide.html.slim
 [source,slim]
 ----
 - blocks.first.items.each do |_item|
