@@ -54,12 +54,11 @@ For Bespoke.js::
  $ npm install -g gulp-cli
 
 For Asciidoctor::
-+
-[start=3]
+
 . https://www.ruby-lang.org[Ruby] >= 2 footnote:[We strongly recommend using http://rvm.io[RVM] to manage Ruby.]
 . http://bundler.io[Bundler]
 
- $ rvm use 2.3.0@main --install --create # (optional)
+ $ rvm use 2.3.0 --install # (optional)
  $ gem install bundler
 
 Naturally, you'll also need a Bespoke.js project, just like you would for any Bespoke.js presentation.
