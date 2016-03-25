@@ -1,7 +1,5 @@
 = {project-name}
 Dan Allen <https://github.com/mojavelinux>
-// Metadata:
-:latest-release: 1.0.0.alpha.1
 // Settings:
 :idprefix:
 :idseparator: -
@@ -13,6 +11,7 @@ ifdef::env-github,env-browser[]
 :toclevels: 2
 endif::[]
 ifdef::env-github[]
+:outfilesuffix: .adoc
 :!toc-title:
 :caution-caption: :fire:
 :important-caption: :exclamation:
@@ -21,6 +20,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 // Aliases:
+:latest-release: 1.0.0.alpha.1
 :project-name: asciidoctor-bespoke
 :conum-guard-js: //
 ifndef::icons[:conum-guard-js: // //]
