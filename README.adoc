@@ -316,7 +316,7 @@ Here's an example:
 image::chart.svg[]
 ----
 
-If you want to give the slide a title, but just not show it, you can use the `conceal` option.
+If you want to assign a title to a slide, but just not show it, you can use the `conceal` option.
 
 .A slide with a concealed heading
 [source,asciidoc]
