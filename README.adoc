@@ -166,11 +166,11 @@ Before we can use our new task, we need to create slide content in AsciiDoc.
 
 Writing AsciiDoc to create slides is pretty much the same as writing AsciiDoc for any another purpose.
 There are two key differences.
-You should write _a lot_ less content and you should only use one level of section headings.
+You should write _a lot_ less content and you only need to use a single level of section headings (plus an optional document title).
 
 === Hello, Bespoke.js!
 
-Below is a basic presentation comprised of two slides, the title slide and one content slide.
+Below is a basic presentation that is comprised of two slides, the title slide and one content slide.
 To add this presentation to your project, create the file [.path]_src/index.adoc_ and populate it with the following content:
 
 .src/index.adoc
@@ -219,7 +219,8 @@ There are a few things you should notice:
 * The section title for each content slide goes in an `<h2>` heading.
 * The presentation is wrapped in an `<article>` element with the class `deck`.
   - At runtime, Bespoke.js will add additional classes to `<article>`, including `bespoke-parent`.
-* The JavaScript and CSS to power the Bespoke.js presentation are loaded from the [.path]_build_ folder.
+* CSS is used to accomplish most of the styling and layout, so you'll need to spend some time on it.
+* The JavaScript and CSS to power the Bespoke.js presentation are loaded from the [.path]_build/_ folder.
 
 Of course, this is not a very interesting presentation, so let's dig a bit deeper.
 
@@ -241,6 +242,7 @@ The slide then incorporates information from the following attributes and nodes 
 * preamble content
 
 NOTE: The title slide is a built-in transform mapped to the {uri-repo-file-prefix}templates/slim/slide_title.html.slim[slide_title.html.slim] template, which you can override.
+You'll need to incorporate CSS (optionally using the Stylus syntax) to arrange and style the title page.
 
 Here's an example of an AsciiDoc document that generates a title slide that is fully populated:
 
@@ -631,7 +633,7 @@ To learn more about how to setup a presentation console, see the https://github.
 
 === Custom Transforms
 
-While conversion from AsciiDoc is meant to save time when producing common slide types, there are cases when you find yourself going against the grain or exceeding the limits of what CSS can handle.
+While conversion from AsciiDoc is meant to save you time producing common slide types, there are cases when you find yourself going against the grain or exceeding the limits of what CSS can handle.
 This situation is normal.
 The truth is, certain slides require an HTML layout that is tailored to the content.
 In these cases, you can use a custom transform.
