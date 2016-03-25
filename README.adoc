@@ -50,15 +50,15 @@ An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of
 The goal of the {project-name} converter is to enable you to craft HTML-based presentations while bypassing the tedium of writing HTML markup.
 This converter satisfies that goal by generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
-(You'll still need to add an ample amount of CSS in order to achieve the presentation style you want).
+(You still need to add an ample amount of CSS in order to achieve the presentation style you want).
 
-The converter is implemented as a collection of Slim templates, which are wrapped in the facade of an Asciidoctor converter.
+The converter is implemented as a collection of Slim templates, which are packaged for your convenience as an Asciidoctor converter.
 Those templates come into play when you want to customize the HTML that the converter generates.
 
-This converter works in tandem with a typical JavaScript project structure based on npm and Gulp.
-npm is used to manage the dependencies, while the Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), run the preview server and publish the result.
+The converter works in tandem with a typical JavaScript project structure based on npm and Gulp.
+npm is used to manage dependencies, while the Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), and either launch the preview server or publish the presentation.
 
-This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation project.
+This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation project and how to write slides in AsciiDoc.
 
 == Prerequisites
 
@@ -78,7 +78,7 @@ For Asciidoctor::
  $ rvm use 2.3.0 --install # (optional)
  $ gem install bundler
 
-Naturally, you'll also need a Bespoke.js project, just like you would for any Bespoke.js presentation.
+Naturally, you'll also need a Bespoke.js project, just as you would for any Bespoke.js presentation.
 If you don't yet have a Bespoke.js project, you can clone the following starter project:
 
  $ git clone https://github.com/opendevise/presentation-bespoke-starter
@@ -91,8 +91,8 @@ We plan to provide an updated Yeoman generator that incorporates {project-name}.
 
 Once you've initialized your Bespoke.js project, the next step is to replace Jade with AsciiDoc.
 
-TIP: If you're creating a new project using the starter project previously mentioned, you can skip the steps below by using the `asciidoc` branch in that repository.
-You can view https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc[a diff of the changes] that this section goes on to cover.
+TIP: If you're creating a new project using the starter project previously mentioned, you can skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>> by using the `asciidoc` branch in that repository.
+You can view https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc[a diff of the changes] this section goes on to cover.
 
 The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the project.
 Populate the file with the following content:
@@ -215,10 +215,10 @@ Here's a close approximation of the HTML the converter generates for the simple 
 
 There are a few things you should notice:
 
-* Each slide is represented by a `<section>`, which is created from each section title.
+* Each slide is represented as a `<section>`, which is generated for each section title.
   - At runtime, Bespoke.js will add additional classes to each `<section>`, including `bespoke-slide`.
 * The title slide has the class `title` and uses an `<h1>` heading.
-* The section title for each content slide goes in an `<h2>` heading.
+* The section title for each content slide gets put in an `<h2>` heading.
 * The presentation is wrapped in an `<article>` element with the class `deck`.
   - At runtime, Bespoke.js will add additional classes to `<article>`, including `bespoke-parent`.
 * CSS is used to accomplish most of the styling and layout, so you'll need to spend some time on it.
@@ -226,13 +226,13 @@ There are a few things you should notice:
 
 Of course, this is not a very interesting presentation, so let's dig a bit deeper.
 
-TIP: To see a complete example of a conventional-style presentation, check out the https://raw.githubusercontent.com/opendevise/bespoke-emulating-shower/master/src/index.adoc[AsciiDoc source] of the https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower] demo.
+TIP: To see a complete example of a corporate-style presentation, check out the https://raw.githubusercontent.com/opendevise/bespoke-emulating-shower/master/src/index.adoc[AsciiDoc source] of the https://github.com/opendevise/bespoke-emulating-shower[Bespoke.js Emulating Shower] demo.
 
 === The Title Slide
 
 By default, the converter automatically creates a title slide from the document header and, if present, the preamble.
 The document title (i.e., doctitle) becomes an `<h1>` heading.
-The slide then incorporates information from the following attributes and nodes (subject to change):
+The slide then incorporates additional information from the following attributes and nodes (subject to change):
 
 * firstname (derived from the author attribute)
 * lastname (derived from the author attribute)
@@ -263,7 +263,7 @@ Additional content for title slide.
 == First Topic
 ----
 
-If you don't want the title slide to be created automatically, add the `noheader` attribute to the document header (or simply don't include a document header).
+If you don't want the title slide to be created, add the `noheader` attribute to the document header (or simply don't include a document header).
 
 .A presentation without a title slide
 [source,asciidoc]
@@ -278,9 +278,10 @@ If you don't want the title slide to be created automatically, add the `noheader
 === Content Slides
 
 Each content slide is created from a level-1 section title.
-(Any levels below level-1 will simply be used as slide content).
 The section title becomes an `<h2>` heading.
 The remainder of the content in the section is placed below this heading.
+
+NOTE: Any levels below level-1 will simply be used as slide content.
 
 Here's an example of a typical content slide with a heading:
 
@@ -685,7 +686,7 @@ Assume you want to create one slide per item in a list.
 
 [source,asciidoc]
 ----
-[transform=step_per_slide]
+[transform=step_by_slide]
 == !
 * one
 * two
@@ -694,7 +695,7 @@ Assume you want to create one slide per item in a list.
 
 Here's a template that implements this behavior:
 
-.slide_step_per_slide.html.slim
+.slide_step_by_slide.html.slim
 [source,slim]
 ----
 - blocks.first.items.each do |_item|
@@ -742,7 +743,7 @@ any global options specific to the Bespoke.js converter
 
 == Building the Presentation
 
-=== Static Version
+=== Building the Static Version
 
 You can build a static version of the slides using the following command:
 
@@ -751,7 +752,7 @@ You can build a static version of the slides using the following command:
 The files are built into the _public_ directory.
 You can then view the slides by navigating to _public/index.html_ in your browser.
 
-=== Local Preview Server
+=== Running the Local Preview Server
 
 If you use the local preview server, the build will monitor the project files for changes and automatically refresh the presentation in the browser when a change is detected.
 You can launch the preview server using:
