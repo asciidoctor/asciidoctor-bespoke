@@ -58,7 +58,7 @@ The converter works in tandem with a typical JavaScript project structure based 
 npm is used to manage dependencies, while a Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), launch the preview server and publish the presentation files.
 
 The converter is implemented as a collection of Slim templates, which are packaged for your convenience as an Asciidoctor converter.
-The templates come into play when you want to customize the HTML that the converter generates.
+The templates come into play when you want to customize the HTML the converter generates.
 
 This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation project and how to write slides in AsciiDoc.
 
@@ -91,13 +91,13 @@ In the future, we plan to provide an updated Yeoman generator that incorporates 
 
 == Integrating AsciiDoc into a Bespoke.js Project
 
-Once you've initialized your Bespoke.js project, the next step is to replace Jade with AsciiDoc.
+Once you've initialized your Bespoke.js project, the next task is to replace Jade with AsciiDoc.
 
 TIP: If you're creating a new project using the starter project previously mentioned, and you switch to the `asciidoc` branch in that repository, you can skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
 If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[the diff of the changes] this section goes on to cover.
 
-The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the project.
-Populate the file with the following content:
+The first step is to configure Bundler to fetch and install the required gems.
+Create the file [.path]_Gemfile_ at the root of the project and populate it with the following content:
 
 .Gemfile
 [source,ruby,subs=attributes+]
@@ -109,7 +109,7 @@ gem 'asciidoctor-bespoke', '{latest-release}'
 #gem 'asciidoctor-bespoke', github: 'asciidoctor/asciidoctor-bespoke'
 ----
 
-Next, run `bundle` from the root of the project to install the gems and their dependencies:
+Next, run `bundle` from the root of the project to install the gems and any dependencies:
 
  $ bundle
 
@@ -122,7 +122,7 @@ If you want to install the gems inside the project, you can pass the `--path` ar
 The `bundle` command will remember this setting on subsequent invocations.
 ====
 
-The next step is to get the converter to generate the HTML from AsciiDoc when the rest of the presentation is built.
+The next step is to get the converter to generate the HTML from AsciiDoc when the presentation build runs.
 We'll repurpose the task that currently generates HTML from Jade for this purpose.
 
 Open [.path]_package.json_ and add the following entries to the `devDependencies` section:
