@@ -321,6 +321,11 @@ A shorthand for the conceal option is to prefix the section title with a `!`.
 image::chart.svg[]
 ----
 
+Notice how we're keeping the concerns of content and presentation cleanly separated.
+Using very little AsciiDoc, you're able to describe a lot of different functionality.
+There doesn't even have to be a direct, literal mapping between the AsciiDoc and the HTML.
+Instead, you should think of the AsciiDoc as a DSL for content.
+
 === The Speaker Slide
 
 The converter includes an _experimental_ speaker slide, which you can place anywhere in the presentation.
