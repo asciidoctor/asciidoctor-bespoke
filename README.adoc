@@ -24,9 +24,20 @@ ifndef::icons[:conum-guard-js: // //]
 :uri-asciidoctor: http://asciidoctor.org
 :uri-bespoke: http://markdalgleish.com/projects/bespoke.js/
 :uri-bespoke-multimedia: https://github.com/opendevise/bespoke-multimedia
+:uri-bundler: http://bundler.io
+:uri-gulp: http://gulpjs.com
+:uri-nodejs: https://nodejs.org
+:uri-nvm: https://github.com/creationix/nvm
 :uri-repo: https://github.com/asciidoctor/asciidoctor-bespoke
 :uri-repo-file-prefix: {uri-repo}/blob/master/
-ifdef::env-github[:uri-repo-file-prefix: link:]
+:uri-repo-tree-prefix: {uri-repo}/tree/master/
+ifdef::env-github[]
+:uri-repo-file-prefix: link:
+:uri-repo-tree-prefix: link:
+endif::[]
+:uri-ruby: https://www.ruby-lang.org
+:uri-rvm: http://rvm.io
+:uri-slim-docs: http://www.rubydoc.info/gems/slim/
 :uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
 
