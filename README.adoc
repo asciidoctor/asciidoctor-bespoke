@@ -794,11 +794,13 @@ TODO
 
 === Authors
 
-{project-name} was written by {email}[{author}].
+{project-name} was created by {email}[{author}].
+
+Bespoke.js was created by https://github.com/markdalgleish[Mark Dalgleish] and has received contributions, mostly in the form of plugins, from many other individuals in the Bespoke.js ecosystem.
 
 === Copyright
 
 Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project.
-Free use of this software is granted under the terms of the MIT License.
 
+Free use of this software is granted under the terms of the MIT License.
 See the <<LICENSE#,LICENSE>> file for details.
