@@ -1,0 +1,13 @@
+= {project-name} Changelog
+:project-name: asciidoctor-bespoke
+:uri-repo: https://github.com/asciidoctor/asciidoctor-bespoke
+
+This document provides a high-level view of the changes introduced in {project-name} by release.
+For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
+
+== 1.0.0.alpha.1 (2015-03-25) - @mojavelinux
+
+Initial release.
+
+{uri-repo}/issues?q=milestone%3Av1.0.0.alpha.1[issues resolved] |
+{uri-repo}/releases/tag/v1.0.0.alpha.1[git tag]
