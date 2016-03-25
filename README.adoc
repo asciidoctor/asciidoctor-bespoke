@@ -45,14 +45,18 @@ An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of
 
 == Overview
 
-The goal of {project-name} is to enable you to craft HTML-based presentations while bypassing the tedium of writing HTML by hand.
-This converter delivers on that goal by generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
+The goal of the {project-name} converter is to enable you to craft HTML-based presentations while bypassing the tedium of writing HTML markup.
+This converter satisfies that goal by generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
+(You'll still need to add an ample amount of CSS in order to achieve the presentation style you want).
 
-This converter works as part of the typical Gulp-based build for a Bespoke.js project.
-You still need the build in order to manage dependencies, combine and "`browserify`" the JavaScript, compile the CSS, convert the AsciiDoc to HTML, run the preview server and publish the result.
+The converter is implemented as a collection of Slim templates, which are wrapped in the facade of an Asciidoctor converter.
+Those templates come into play when you want to customize the HTML that the converter generates.
 
-This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation.
+This converter works in tandem with a typical JavaScript project structure based on npm and Gulp.
+npm is used to manage the dependencies, while the Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), run the preview server and publish the result.
+
+This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation project.
 
 == Prerequisites
 
