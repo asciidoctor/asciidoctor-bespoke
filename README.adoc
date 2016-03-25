@@ -6,9 +6,11 @@ ifndef::env-github[]
 :idprefix:
 :idseparator: -
 endif::[]
-ifdef::env-github[]
+ifdef::env-github,env-browser[]
 :toc: preamble
 :toclevels: 2
+endif::[]
+ifdef::env-github[]
 :!toc-title:
 :caution-caption: :fire:
 :important-caption: :exclamation:
