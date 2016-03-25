@@ -3,10 +3,10 @@ Dan Allen <https://github.com/mojavelinux>
 // Metadata:
 :latest-release: 1.0.0.alpha.1
 // Settings:
-ifndef::env-github[]
-:icons: font
 :idprefix:
 :idseparator: -
+ifndef::env-github[]
+:icons: font
 endif::[]
 ifdef::env-github,env-browser[]
 :toc: preamble
@@ -49,22 +49,22 @@ An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of
 
 == Overview
 
-The goal of the {project-name} converter is to enable you to craft HTML-based presentations while bypassing the tedium of writing HTML markup.
-This converter satisfies that goal by generating the HTML component of a Bespoke.js presentation from an AsciiDoc document.
+The goal of {project-name} is to enable you to craft HTML-based presentations from reusable content while avoiding the tedium of writing HTML markup.
+This library satisfies that goal by providing a converter that generates the HTML component of a Bespoke.js presentation from an AsciiDoc document.
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
 (You still need to add an ample amount of CSS in order to achieve the presentation style you want).
 
-The converter is implemented as a collection of Slim templates, which are packaged for your convenience as an Asciidoctor converter.
-Those templates come into play when you want to customize the HTML that the converter generates.
-
 The converter works in tandem with a typical JavaScript project structure based on npm and Gulp.
-npm is used to manage dependencies, while the Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), and either launch the preview server or publish the presentation.
+npm is used to manage dependencies, while a Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), launch the preview server and publish the presentation files.
+
+The converter is implemented as a collection of Slim templates, which are packaged for your convenience as an Asciidoctor converter.
+The templates come into play when you want to customize the HTML that the converter generates.
 
 This guide explains how to integrate the {project-name} converter into an existing Bespoke.js presentation project and how to write slides in AsciiDoc.
 
 == Prerequisites
 
-In order to use this converter, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
+In order to use {project-name}, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
 
 For Bespoke.js::
 . {uri-nodejs}[Node.js] >= 0.12 footnote:[We strongly recommend using {uri-nvm}[nvm] to manage Node.]
@@ -85,16 +85,16 @@ If you don't yet have a Bespoke.js project, you can clone the following starter 
 
  $ git clone https://github.com/opendevise/presentation-bespoke-starter
 
-You can also use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
-However, as a word of warning, that generator is substantially out of date.
-We plan to provide an updated Yeoman generator that incorporates {project-name}.
+Alternatively, you can use the {uri-yo-bespoke}[Yeoman generator for Bespoke.js] to initialize your project.
+As a word of warning, that generator has become substantially out of date.
+In the future, we plan to provide an updated Yeoman generator that incorporates {project-name} into a new Bespoke.js project for you.
 
 == Integrating AsciiDoc into a Bespoke.js Project
 
 Once you've initialized your Bespoke.js project, the next step is to replace Jade with AsciiDoc.
 
-TIP: If you're creating a new project using the starter project previously mentioned, you can skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>> by using the `asciidoc` branch in that repository.
-You can view https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc[a diff of the changes] this section goes on to cover.
+TIP: If you're creating a new project using the starter project previously mentioned, and you switch to the `asciidoc` branch in that repository, you can skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
+If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[the diff of the changes] this section goes on to cover.
 
 The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the project.
 Populate the file with the following content:
@@ -112,6 +112,15 @@ gem 'asciidoctor-bespoke', '{latest-release}'
 Next, run `bundle` from the root of the project to install the gems and their dependencies:
 
  $ bundle
+
+[TIP]
+====
+If you want to install the gems inside the project, you can pass the `--path` argument to `bundle`:
+
+ $ bundle --path=rubygems
+
+The `bundle` command will remember this setting on subsequent invocations.
+====
 
 The next step is to get the converter to generate the HTML from AsciiDoc when the rest of the presentation is built.
 We'll repurpose the task that currently generates HTML from Jade for this purpose.
@@ -170,7 +179,7 @@ Before we can use our new task, we need to create slide content in AsciiDoc.
 
 Writing AsciiDoc to create slides is pretty much the same as writing AsciiDoc for any another purpose.
 There are two key differences.
-You should write _a lot_ less content and you only need to use a single level of section headings (plus an optional document title).
+You'll be writing _a lot_ less content and you only need to use a single level of section headings (plus an optional document title).
 
 === Hello, Bespoke.js!
 
@@ -627,7 +636,7 @@ That block must then be placed at the end of the section for that slide.
 [source,asciidoc]
 ----
 == Topic
-Visible content.
+Slide content.
 
 [.cue]
 ****
