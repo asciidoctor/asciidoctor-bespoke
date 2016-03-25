@@ -718,6 +718,12 @@ This template applied to the previous slide content will generate the following 
 As you can see, there's no reason you have to stick to a 1-to-1 mapping between what is in the AsciiDoc file and the slide(s) you're generating.
 The custom transform gives you the flexibility to layout the content on the slide exactly how you want.
 
+You can go deeper and customize the template used for any node (without having to add any hints in the AsciiDoc).
+This converter is based on a {uri-repo-tree-prefix}templates/slim[collection of Slim templates].
+You can copy any one of these templates into your custom templates directory and make modifications to it.
+Asciidoctor will use your copy instead of the matching template provided by the converter.
+To learn more about how to write Slim templates, refer to the {uri-slim-docs}[Slim documentation].
+
 ////
 any global options specific to the Bespoke.js converter
 
