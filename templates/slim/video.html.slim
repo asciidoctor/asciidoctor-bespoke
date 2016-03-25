@@ -9,7 +9,8 @@ figure.video class=_service id=id class=role
     - _player_id = %(vimeo-#{SecureRandom.urlsafe_base64 7})
     - _start = (local_attr? :start) ? %(#at=#{local_attr :start}) : nil
     / NOTE for a list of params, see https://developer.vimeo.com/player/embedding#universal-parameters
-    - _params = ['api=1', %(player_id=#{_player_id}), 'badge=0', 'portrait=0', 'title=0', 'byline=0']
+    - _params = [%(player_id=#{_player_id}), 'api=1']
+    - _params += (option? :background) ? ['autoplay=0', 'background=1'] : ['badge=0', 'portrait=0', 'title=0', 'byline=0']
     - _params << 'loop=1' if option? :loop
     - _src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{local_attr :target}?#{_params * '&amp;'})
     iframe(id=_player_id src=_src width=(local_attr :width) height=(local_attr :height) frameborder=0
