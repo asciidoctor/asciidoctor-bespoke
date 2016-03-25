@@ -63,15 +63,15 @@ This guide explains how to integrate the {project-name} converter into an existi
 In order to use this converter, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
 
 For Bespoke.js::
-. https://nodejs.org[Node.js] >= 0.12 footnote:[We strongly recommend using https://github.com/creationix/nvm[nvm] to manage Node.]
-. http://gulpjs.com[Gulp] (command line interface only)
+. {uri-nodejs}[Node.js] >= 0.12 footnote:[We strongly recommend using {uri-nvm}[nvm] to manage Node.]
+. {uri-gulp}[Gulp] (command line interface only)
 
  $ npm install -g gulp-cli
 
 For Asciidoctor::
 
-. https://www.ruby-lang.org[Ruby] >= 2 footnote:[We strongly recommend using http://rvm.io[RVM] to manage Ruby.]
-. http://bundler.io[Bundler]
+. {uri-ruby}[Ruby] >= 2 footnote:[We strongly recommend using {uri-rvm}[RVM] to manage Ruby.]
+. {uri-bundler}[Bundler]
 
  $ rvm use 2.3.0 --install # (optional)
  $ gem install bundler
