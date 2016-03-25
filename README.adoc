@@ -767,9 +767,9 @@ You can build a static version of the slides using the following command:
 The files are built into the _public_ directory.
 You can then view the slides by navigating to _public/index.html_ in your browser.
 
-=== Running the Local Preview Server
+=== Running the Preview Server
 
-If you use the local preview server, the build will monitor the project files for changes and automatically refresh the presentation in the browser when a change is detected.
+If you use the preview server, the build will monitor the project files for changes and automatically refresh the presentation in the browser when a change is detected.
 You can launch the preview server using:
 
  $ gulp serve
