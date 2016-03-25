@@ -520,7 +520,7 @@ The effects supported out of the box are as follows:
 
 * fade
 * vanish
-* replace (pending)
+* replace (planned)
 
 The CSS in the <<Build Configuration>> section implements these effects.
 
