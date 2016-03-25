@@ -292,7 +292,7 @@ Each content slide is created from a level-1 section title.
 The section title becomes an `<h2>` heading.
 The remainder of the content in the section is placed below this heading.
 
-NOTE: Any levels below level-1 will simply be used as slide content.
+NOTE: Any section levels below level-1 will simply be used as content in the slide.
 
 Here's an example of a typical content slide with a heading:
 
