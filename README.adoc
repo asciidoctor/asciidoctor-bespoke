@@ -387,6 +387,7 @@ Before diving into that metadata, we first need to do a bit of configuration.
 
 Here's the JavaScript you'll need to add to your Bespoke.js configuration to activate the bespoke-bullets plugin to implement the behavior described in this section.
 
+.src/scripts/main.js
 [source,js,subs=attributes+]
 ----
 var bespoke = require('bespoke'),
@@ -405,6 +406,7 @@ bespoke.from('article', [
 Here's the CSS necessary to handle the visibility of build items and introduce several build effects.
 You can customize the styles to your liking.
 
+// FIXME explain how to write these styles in Stylus
 [source,css]
 ----
 .bespoke-bullet:not(.bespoke-bullet-active) {
