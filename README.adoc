@@ -679,7 +679,9 @@ section.presenter id=id class=role
 
 Finally, when you invoke the converter, you must specify the location of the template file using the `-T` option:
 
- $ asciidoctor-bespoke -T src/templates src/index.adoc
+ $ asciidoctor-bespoke -D public -T src/templates src/index.adoc
+
+// TODO explain how to integrate into Gulp build
 
 Since you can access the entire document model of the parsed AsciiDoc in the template, you are free to pick and choose the content you want to add to the slide and in what order.
 
