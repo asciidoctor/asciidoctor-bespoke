@@ -1,5 +1,7 @@
 = {project-name}
 Dan Allen <https://github.com/mojavelinux>
+// Metadata:
+:latest-release: 1.0.0.alpha.1
 // Settings:
 ifndef::env-github[]
 :icons: font
@@ -98,12 +100,12 @@ The first thing you'll need to do is add a [.path]_Gemfile_ to the root of the p
 Populate the file with the following content:
 
 .Gemfile
-[source,ruby]
+[source,ruby,subs=attributes+]
 ----
 source 'https://rubygems.org'
 
-gem 'asciidoctor-bespoke', '1.0.0.alpha.1'
-# To use the latest version from git, use the following line instead
+gem 'asciidoctor-bespoke', '{latest-release}'
+# To use the latest version from git, use the following line instead:
 #gem 'asciidoctor-bespoke', github: 'asciidoctor/asciidoctor-bespoke'
 ----
 
