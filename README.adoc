@@ -95,7 +95,7 @@ In the future, we plan to provide an updated Yeoman generator that incorporates 
 Once you've initialized your Bespoke.js project, the next task is to replace Jade with AsciiDoc.
 
 TIP: If you're creating a new project using the starter project previously mentioned, you can switch to the `asciidoc` branch in that repository to skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
-If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[the diff of the changes] this section goes on to cover.
+If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[a diff] that contains the changes this section goes on to cover.
 
 The first step is to configure Bundler to fetch and install the required gems.
 Create a file named [.path]_Gemfile_ at the root of the project and populate it with the following content:
@@ -198,7 +198,7 @@ To add this presentation to your project, create the file [.path]_src/index.adoc
 
 Believe it or not, that's all it takes to make a presentation!
 
-Here's a close approximation of the HTML the converter generates for the example shown above (formatted for clarity).
+Here's a close approximation of the HTML the converter generates from the example shown above (formatted for clarity).
 
 [source,html]
 ----
@@ -232,7 +232,7 @@ There are a few things you should notice:
 * The title slide has the class `title` and uses an `<h1>` heading.
 * The section title for each content slide gets put in an `<h2>` heading.
 * The presentation is wrapped in an `<article>` element with the class `deck`.
-  - At runtime, Bespoke.js will add additional classes to `<article>`, including `bespoke-parent`.
+  - At runtime, Bespoke.js adds additional classes to `<article>`, including `bespoke-parent`.
 * CSS is used to accomplish most of the styling and layout, so you'll need to spend some time on it.
 * The JavaScript and CSS to power the Bespoke.js presentation are loaded from the [.path]_build/_ folder.
 
@@ -270,12 +270,12 @@ Author Name <http://example.com>
 :avatar: author-avatar.png
 :!sectids:
 
-Additional content for title slide.
+Additional content for the title slide.
 
 == First Topic
 ----
 
-If you don't want the title slide to be created, add the `noheader` attribute to the document header (or simply don't include a document header).
+If you don't want the title slide to be created, add the `noheader` attribute to the document header.
 
 .A presentation without a title slide
 [source,asciidoc]
@@ -286,6 +286,8 @@ If you don't want the title slide to be created, add the `noheader` attribute to
 
 == First Topic
 ----
+
+Another option is to simply leave out the document header altogether.
 
 === Content Slides
 
@@ -307,7 +309,7 @@ Here's an example of a typical content slide with a heading:
 ----
 
 While many of your slides may have a primary heading--perhaps as the only content on the slide--there are many slide types that don't require a heading.
-You can indicate a slide without a heading by using `!` as the section title.
+You can mark a slide without a heading by using `!` as the section title.
 Here's an example:
 
 .A slide with only content (i.e., an anonymous slide)
@@ -317,7 +319,7 @@ Here's an example:
 image::chart.svg[]
 ----
 
-If you want to assign a title to a slide, but just not show it, you can use the `conceal` option.
+If you still want to assign a title to a slide, but not show it, you can add the option named `conceal`.
 
 .A slide with a concealed heading
 [source,asciidoc]
