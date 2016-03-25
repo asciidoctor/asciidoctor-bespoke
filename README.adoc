@@ -387,15 +387,15 @@ Before diving into that metadata, we first need to do a bit of configuration.
 
 Here's the JavaScript you'll need to add to your Bespoke.js configuration to activate the bespoke-bullets plugin to implement the behavior described in this section.
 
-[source,js]
+[source,js,subs=attributes+]
 ----
 var bespoke = require('bespoke'),
-  bullets = require('bespoke-bullets') // <1>
+  bullets = require('bespoke-bullets') {conum-guard-js} <1>
   ...
 
 bespoke.from('article', [
   ...
-  bullets('.build,.build-items>*:not(.build-items)'), // <2>
+  bullets('.build,.build-items>*:not(.build-items)'), {conum-guard-js} <2>
   ...
 ]);
 ----
