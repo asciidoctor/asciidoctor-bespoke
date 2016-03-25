@@ -49,13 +49,14 @@ An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of
 
 == Overview
 
-The goal of {project-name} is to enable you to craft HTML-based presentations from reusable content while avoiding the tedium of writing HTML markup.
+The goal of {project-name} is to enable you to craft HTML-based presentations from reusable content while avoiding the tedium of writing HTML.
 This library satisfies that goal by providing a converter that generates the HTML component of a Bespoke.js presentation from an AsciiDoc document.
 In other words, it allows you to use AsciiDoc in place of HTML (or an HTML template language like Jade) in your Bespoke.js project.
 (You still need to add an ample amount of CSS in order to achieve the presentation style you want).
 
 The converter works in tandem with a typical JavaScript project structure based on npm and Gulp.
-npm is used to manage dependencies, while a Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), launch the preview server and publish the presentation files.
+npm is used to manage dependencies.
+A Gulp build is used to combine and "`browserify`" the JavaScript, compile the CSS, execute this converter (to convert AsciiDoc to HTML), launch the preview server and publish the presentation files.
 
 The converter is implemented as a collection of Slim templates, which are packaged for your convenience as an Asciidoctor converter.
 The templates come into play when you want to customize the HTML the converter generates.
@@ -93,11 +94,11 @@ In the future, we plan to provide an updated Yeoman generator that incorporates 
 
 Once you've initialized your Bespoke.js project, the next task is to replace Jade with AsciiDoc.
 
-TIP: If you're creating a new project using the starter project previously mentioned, and you switch to the `asciidoc` branch in that repository, you can skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
+TIP: If you're creating a new project using the starter project previously mentioned, you can switch to the `asciidoc` branch in that repository to skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
 If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[the diff of the changes] this section goes on to cover.
 
 The first step is to configure Bundler to fetch and install the required gems.
-Create the file [.path]_Gemfile_ at the root of the project and populate it with the following content:
+Create a file named [.path]_Gemfile_ at the root of the project and populate it with the following content:
 
 .Gemfile
 [source,ruby,subs=attributes+]
@@ -109,13 +110,13 @@ gem 'asciidoctor-bespoke', '{latest-release}'
 #gem 'asciidoctor-bespoke', github: 'asciidoctor/asciidoctor-bespoke'
 ----
 
-Next, run `bundle` from the root of the project to install the gems and any dependencies:
+Next, run `bundle` from the root of the project to install the gems and any dependencies they have:
 
  $ bundle
 
 [TIP]
 ====
-If you want to install the gems inside the project, you can pass the `--path` argument to `bundle`:
+If you want to install the gems inside the project, you can pass the `--path` argument to `bundle`.
 
  $ bundle --path=rubygems
 
@@ -197,7 +198,7 @@ To add this presentation to your project, create the file [.path]_src/index.adoc
 
 Believe it or not, that's all it takes to make a presentation!
 
-Here's a close approximation of the HTML the converter generates for the simple presentation shown above.
+Here's a close approximation of the HTML the converter generates for the example shown above (formatted for clarity).
 
 [source,html]
 ----
@@ -226,8 +227,8 @@ Here's a close approximation of the HTML the converter generates for the simple 
 
 There are a few things you should notice:
 
-* Each slide is represented as a `<section>`, which is generated for each section title.
-  - At runtime, Bespoke.js will add additional classes to each `<section>`, including `bespoke-slide`.
+* Each slide is represented as a `<section>`, which is generated per section title.
+  - At runtime, Bespoke.js adds additional classes to each `<section>`, including `bespoke-slide`.
 * The title slide has the class `title` and uses an `<h1>` heading.
 * The section title for each content slide gets put in an `<h2>` heading.
 * The presentation is wrapped in an `<article>` element with the class `deck`.
