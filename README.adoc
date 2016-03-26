@@ -11,6 +11,7 @@ ifdef::env-github,env-browser[]
 :toclevels: 2
 endif::[]
 ifdef::env-github[]
+:status:
 :outfilesuffix: .adoc
 :!toc-title:
 :caution-caption: :fire:
@@ -44,6 +45,10 @@ endif::[]
 :uri-slim-docs: http://www.rubydoc.info/gems/slim/
 :uri-svgo: https://github.com/svg/svgo
 :uri-yo-bespoke: https://github.com/bespokejs/generator-bespoke
+
+ifdef::status[]
+image:https://img.shields.io/gem/v/asciidoctor-bespoke.svg?label=gem[gem badge, link=https://rubygems.org/gems/asciidoctor-bespoke]
+endif::[]
 
 An {uri-asciidoctor}[Asciidoctor] converter that generates the HTML component of a {uri-bespoke}[Bespoke.js] presentation from AsciiDoc.
 
