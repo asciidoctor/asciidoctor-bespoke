@@ -103,7 +103,7 @@ In the future, we plan to provide an updated Yeoman generator that incorporates 
 
 Once you've initialized your Bespoke.js project, the next task is to replace Jade with AsciiDoc.
 
-TIP: If you're creating a new project using the starter project previously mentioned, you can switch to the `asciidoc` branch in that repository to skip the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
+TIP: If you're creating a new project using the starter project previously mentioned, you can switch to the https://github.com/opendevise/presentation-bespoke-starter/tree/asciidoc[asciidoc branch] in that repository to skip past the steps in this section and jump ahead to <<Creating Slides in AsciiDoc>>.
 If you're curious, you can review https://github.com/opendevise/presentation-bespoke-starter/compare/asciidoc?diff=split[a diff] that contains the changes this section goes on to cover.
 
 The first step is to configure Bundler to fetch and install the required gems.
