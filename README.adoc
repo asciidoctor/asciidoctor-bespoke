@@ -71,14 +71,16 @@ This guide explains how to integrate the {project-name} converter into an existi
 == Prerequisites
 
 In order to use {project-name}, you must satisify the prerequisites of both Bespoke.js and Asciidoctor.
+You also need a Bespoke.js project.
 
-For Bespoke.js::
+=== For Bespoke.js
+
 . {uri-nodejs}[Node.js] >= 0.12 footnote:[We strongly recommend using {uri-nvm}[nvm] to manage Node.]
 . {uri-gulp}[Gulp] (command line interface only)
 
  $ npm install -g gulp-cli
 
-For Asciidoctor::
+=== For Asciidoctor
 
 . {uri-ruby}[Ruby] >= 2 footnote:[We strongly recommend using {uri-rvm}[RVM] to manage Ruby.]
 . {uri-bundler}[Bundler]
@@ -86,8 +88,10 @@ For Asciidoctor::
  $ rvm use 2.3.0 --install # (optional)
  $ gem install bundler
 
+=== Bespoke.js Project
+
 Naturally, you'll also need a Bespoke.js project, just as you would for any Bespoke.js presentation.
-If you don't yet have a Bespoke.js project, you can clone the following starter project:
+If you don't yet have a Bespoke.js project, you can clone the provided https://github.com/opendevise/presentation-bespoke-starter[starter project]:
 
  $ git clone https://github.com/opendevise/presentation-bespoke-starter
 
@@ -125,7 +129,7 @@ If you want to install the gems inside the project, you can pass the `--path` ar
 
  $ bundle --path=rubygems
 
-The `bundle` command will remember this setting on subsequent invocations.
+The `bundle` command will remember this setting for all successive invocations.
 ====
 
 The next step is to get the converter to generate the HTML from AsciiDoc when the presentation build runs.
@@ -142,14 +146,14 @@ Save the file and run `npm i` to install the new packages into your project:
 
  $ npm i
 
-Open [.path]_gulpfile.js_ and add the following entries to the list of requires at the top:
+Open [.path]_gulpfile.js_ and add the following entries to the list of `require` calls at the top of the file:
 
 .gulpfile.js (snippet)
 [source,js]
   chmod = require('gulp-chmod'),
   exec = require('gulp-exec'),
 
-In the same file, remove the existing `html` task and replace it with the one below:
+Also in [.path]_gulpfile.js_, replace the existing `html` task with the one below:
 
 .gulpfile.js (snippet)
 [source,js,subs=attributes+]
@@ -166,7 +170,7 @@ gulp.task('html', ['clean:html'], function() {
 
 //<1> Add `bundle exec` in front of the `asciidoctor-bespoke` command if you're using the development version from git.
 
-Finally, if you want the build to watch the AsciiDoc file(s) for changes, look for the following line in the watch task:
+Finally, to get the build to watch the AsciiDoc file(s) for changes, look for the following line in the watch task in [.path]_gulpfile.js_:
 
 .gulpfile.js (snippet)
 [source,js]
@@ -178,7 +182,7 @@ and replace it with:
 [source,js]
   gulp.watch('src/**/*.adoc', ['html']);
 
-The build is now ready.
+The build is now ready!
 Before we can use our new task, we need to create slide content in AsciiDoc.
 
 == Creating Slides in AsciiDoc
