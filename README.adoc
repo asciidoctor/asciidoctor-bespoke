@@ -265,6 +265,7 @@ The slide then incorporates additional information from the following attributes
 * preamble content
 
 NOTE: The title slide is a built-in transform mapped to the {uri-repo-file-prefix}templates/slim/slide_title.html.slim[slide_title.html.slim] template, which you can override.
+See <<Custom Transforms>> for information about where to put this file and how to load it.
 You'll need to incorporate CSS (optionally using the Stylus syntax) to arrange and style the title page.
 
 Here's an example of an AsciiDoc document that generates a title slide that is fully populated:
@@ -373,6 +374,7 @@ The speaker slide currently incorporates the following attributes:
 * section content (if any)
 
 NOTE: The speaker slide is a built-in transform mapped to the {uri-repo-file-prefix}templates/slim/slide_speaker.html.slim[slide_speaker.html.slim] template, which you can override.
+See <<Custom Transforms>> for information about where to put this file and how to load it.
 
 Here's a rough approximation of the HTML generated for the speaker slide:
 
