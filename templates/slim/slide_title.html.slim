@@ -22,6 +22,8 @@ section.title id=header.id class=[role, ('image' if _bg_img)] style=_style data-
         p.author
           span.personname
             span.firstname=>attr :firstname
+            - if (attr? :middlename)
+              span.middlename=>attr :middlename
             span.surname=attr :lastname
           - if (attr? :position) || (attr? :organization)
             =newline
