@@ -156,7 +156,7 @@ Open [.path]_gulpfile.js_ and add the following entries to the list of `require`
 Also in [.path]_gulpfile.js_, replace the existing `html` task with the one below:
 
 .gulpfile.js (snippet)
-[source,js,subs=attributes+]
+[source,js]
 gulp.task('html', ['clean:html'], function() {
   return gulp.src('src/index.adoc')
     .pipe(isDist ? through() : plumber())
