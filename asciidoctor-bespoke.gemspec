@@ -12,11 +12,12 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.required_ruby_version = '>= 1.9.3'
 
-  begin
-    s.files = `git ls-files -z -- {bin,lib,templates}/* {LICENSE,README}.adoc Rakefile`.split "\0"
+  files = begin
+    IO.popen('git ls-files -z') {|io| io.read }.split "\0"
   rescue
-    s.files = Dir['**/*']
+    Dir['**/*']
   end
+  s.files = files.grep(/^(?:(?:bin|lib|templates)\/.+|Rakefile|(LICENSE|README)\.adoc)$/)
 
   s.executables = ['asciidoctor-bespoke']
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc']
