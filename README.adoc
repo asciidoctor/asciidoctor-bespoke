@@ -174,7 +174,7 @@ Finally, to get the build to watch the AsciiDoc file(s) for changes, look for th
 
 .gulpfile.js (snippet)
 [source,js]
-  gulp.watch('src/**/*.jade', ['html']);
+  gulp.watch('src/**/*.pug', ['html']);
 
 and replace it with:
 
