@@ -13,14 +13,14 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
 
   files = begin
-    IO.popen('git ls-files -z') {|io| io.read }.split "\0"
+    (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty? ? Dir['**/*'] : result
   rescue
     Dir['**/*']
   end
-  s.files = files.grep(/^(?:(?:bin|lib|templates)\/.+|Rakefile|(LICENSE|README)\.adoc)$/)
+  s.files = files.grep %r/^(?:(?:lib|templates)\/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$/
 
   s.executables = ['asciidoctor-bespoke']
-  s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc']
+  s.extra_rdoc_files = ['CHANGELOG.adoc', 'LICENSE.adoc', 'README.adoc']
   s.require_paths = ['lib']
 
   # QUESTION should asciidoctor be a runtime dependency?
