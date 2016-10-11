@@ -125,9 +125,9 @@ Next, run `bundle` from the root of the project to install the gems and any depe
 
 [TIP]
 ====
-If you want to install the gems inside the project, you can pass the `--path` argument to `bundle`.
+If you want to install the gems inside the project, you can pass the `--path` argument to `.bundle/gems`.
 
- $ bundle --path=rubygems
+ $ bundle --path=.bundle/gems
 
 The `bundle` command will remember this setting for all successive invocations.
 ====
