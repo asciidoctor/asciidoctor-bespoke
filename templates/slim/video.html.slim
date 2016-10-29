@@ -20,7 +20,7 @@ figure.video class=_service id=id class=role
     - _params = ['enablejsapi=1', 'rel=0', 'showinfo=0', 'controls=0', 'disablekb=1']
     / NOTE start and end must be in seconds
     - _params << %(start=#{local_attr :start}) if local_attr? :start
-    - _params << %(end=#{local_attr :start}) if local_attr? :end
+    - _params << %(end=#{local_attr :end}) if local_attr? :end
     - _params += ['loop=1', %(playlist=#{_target})] if option? :loop
     - _params << 'fs=0' if option? :nofullscreen
     - _params << %(hl=#{document.attr :lang}) if document.attr? :lang
