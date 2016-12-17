@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-bespoke",
   "dependencies": {
-    "asciidoctor-template.js": "1.5.5-3"
+    "asciidoctor-template.js": "1.5.5-4"
   },
   "devDependencies": {
     "async": "^1.5.0",
