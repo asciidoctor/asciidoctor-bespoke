@@ -3,3 +3,5 @@
 /pkg/
 /.ruby-gemset
 /.ruby-version
+/build/
+/node_modules/

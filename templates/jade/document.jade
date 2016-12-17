@@ -1,0 +1,22 @@
+doctype html
+html(lang=(node.isAttribute('nolang') ? '' : node.getAttribute('lang', 'en')))
+  head
+    meta(charset="UTF-8")
+    // QUESTION should we add maximum-scale=1 to viewport setting?
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title=(node.getDoctitle())
+    each key in ["description","keywords","author","copyright"]
+      if node.getAttribute(key, false)
+        meta(name=key,content=node.getAttribute(key))
+    meta(name='generator', content="Asciidoctor #{node.getAttribute('asciidoctor-version')} (Bespoke.js converter)")
+    meta(name='mobile-web-app-capable', content='yes')
+    - if (node.getAttribute('appname'))
+      meta(name='application-name' content=(node.getAttribute('appname')))
+    link(rel='stylesheet', href='build/build.css')
+    - if (node.getAttribute('icons', 'font'))
+      - if (node.getAttribute('iconfont-remote'))
+        link(rel='stylesheet', href=(node.getAttribute('iconfont-cdn', cdn_uri + '/font-awesome/4.5.0/css/font-awesome.min.css')))
+  body(id=id)
+    article.deck
+      =content
+    script(src='build/build.js')
