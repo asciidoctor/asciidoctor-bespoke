@@ -1,0 +1,24 @@
+section.title(data-title='', data-bespoke-backdrop=(node.getAttribute('header-backdrop-role')))
+  h1= node.getDoctitle()
+  if (node.isAttribute('author'))
+    footer
+      p.author
+        span.personname
+          span.firstname= node.getAttribute('firstname')
+          if (node.isAttribute('middlename'))
+            span.middlename= node.getAttribute('middlename')
+          span.surname= node.getAttribute('lastname')
+        if ((node.isAttribute('position') || (node.isAttribute('organization'))))
+          span.affiliation
+            - if (node.isAttribute('position'))
+              span.position= node.getAttribute('position')
+            if (node.isAttribute('organization'))
+              span.organization= node.getAttribute('organization')
+        if (node.isAttribute('avatar'))
+          img.avatar(src=(node.getImageURI(node.getAttribute('avatar'))) alt=(node.getAttribute('author')))
+        if (node.isAttribute('twitter') || (node.isAttribute('email')))
+          span.contact
+            if (node.isAttribute('twitter'))
+              span.twitter= node.getAttribute('twitter')
+            if (node.isAttribute('email'))
+              span.email= node.getAttribute('email')
