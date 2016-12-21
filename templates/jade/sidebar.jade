@@ -1,7 +1,7 @@
 if node.hasRole('cue')
   include notes.jade
 else
-  aside(id=id class=node.getRole())
+  aside(id=node.getId() class=node.getRole())
     if node.getTitle() !== ''
       h1=node.getTitle()
     !=node.getContent()

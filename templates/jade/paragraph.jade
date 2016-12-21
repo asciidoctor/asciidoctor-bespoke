@@ -1,6 +1,6 @@
 mixin space()
   | !{' '}
-p(id=id class=node.getRole())
+p(id=node.getId() class=node.getRole())
   if node.getTitle() !== ''
       - _title = node.getTitle()
       - _stacked = node.isOption('stacked')

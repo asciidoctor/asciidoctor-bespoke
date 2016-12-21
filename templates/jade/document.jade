@@ -16,7 +16,7 @@ html(lang=(node.isAttribute('nolang') ? '' : node.getAttribute('lang', 'en')))
     if (node.getAttribute('icons', 'font'))
       if (node.getAttribute('iconfont-remote'))
         link(rel='stylesheet', href=(node.getAttribute('iconfont-cdn', cdn_uri + '/font-awesome/4.5.0/css/font-awesome.min.css')))
-  body(id=id)
+  body(id=node.getId())
     article.deck
       unless (node.getNoheader())
       if (node.hasHeader())

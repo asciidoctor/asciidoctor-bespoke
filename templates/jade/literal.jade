@@ -1,5 +1,5 @@
 if node.getTitle() !== ''
-  figure.listing id=id
+  figure.listing(id=node.getId())
     figcaption=node.getTitle()
     pre.screen
       !=node.getContent()

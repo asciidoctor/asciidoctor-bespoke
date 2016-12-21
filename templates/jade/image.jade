@@ -4,7 +4,7 @@
 - var _height = node.getAttribute('height')
 - var _format = node.getAttribute('format')
 - var _reload = node.isOption('reload') ? 'true' : 'false'
-figure.image(id=id, class=[node.getRole(), node.isOption('flux') ? 'flux' : ''])
+figure.image(id=node.getId(), class=[node.getRole(), node.isOption('flux') ? 'flux' : ''])
   if _format == 'svg'
     object(type='image/svg+xml' data=(node.getImageURI(_target)) width=_width height=_height data-reload=_reload)
       span.alt=_alt
