@@ -1,0 +1,8 @@
+if node.getTitle() !== ''
+  figure.listing id=id
+    figcaption=node.getTitle()
+    pre.screen
+      !=node.getContent()
+else
+  pre.screen
+    !=node.getContent()

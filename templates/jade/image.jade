@@ -1,0 +1,16 @@
+- var _target = node.getAttribute('target')
+- var _alt = node.getAttribute('alt')
+- var _width = node.getAttribute('width')
+- var _height = node.getAttribute('height')
+- var _format = node.getAttribute('format')
+- var _reload = node.isOption('reload') ? 'true' : 'false'
+figure.image(id=id, class=[node.getRole(), node.isOption('flux') ? 'flux' : ''])
+  if _format == 'svg'
+    object(type='image/svg+xml' data=(node.getImageURI(_target)) width=_width height=_height data-reload=_reload)
+      span.alt=_alt
+  else
+      img(src=(node.getImageURI(_target)) alt=_alt width=_width height=_height data-reload=_reload)
+  if node.getTitle() !== ''
+    figcaption=node.getTitle()
+  if node.getAttribute('credit')
+    small.credit=node.getAttribute('credit')

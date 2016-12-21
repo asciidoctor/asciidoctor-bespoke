@@ -21,5 +21,5 @@ html(lang=(node.isAttribute('nolang') ? '' : node.getAttribute('lang', 'en')))
       unless (node.getNoheader())
       if (node.hasHeader())
         include slide_title.jade
-      =content
+      !=node.getContent()
     script(src='build/build.js')

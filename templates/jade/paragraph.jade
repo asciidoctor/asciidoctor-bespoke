@@ -1,0 +1,12 @@
+mixin space()
+  | !{' '}
+p(id=id class=node.getRole())
+  if node.getTitle() !== ''
+      - _title = node.getTitle()
+      - _stacked = node.isOption('stacked')
+      strong.heading(class=(_stacked ? 'stacked' : 'run-in') data-terminus=(node.getAttribute('heading-terminus', '.')))
+        =_title
+        +space
+      !=node.getContent()
+  else
+    !=node.getContent()

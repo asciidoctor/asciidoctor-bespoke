@@ -1,9 +1,11 @@
+mixin space()
+  | !{' '}
 - var _title_obj = (node.getDoctitle({partition: true, use_fallback: true}))
 section.title(data-title='', data-bespoke-backdrop=(node.getAttribute('header-backdrop-role')))
   if (_title_obj.hasSubtitle())
     header
-      h1= _title_obj.getMain()
-      h2= _title_obj.getSubtitle()
+      h1!= _title_obj.getMain()
+      h2!= _title_obj.getSubtitle()
   else
     h1= node.getDoctitle()
   if (node.isAttribute('author'))
@@ -11,8 +13,10 @@ section.title(data-title='', data-bespoke-backdrop=(node.getAttribute('header-ba
       p.author
         span.personname
           span.firstname= node.getAttribute('firstname')
+          +space
           if (node.isAttribute('middlename'))
             span.middlename= node.getAttribute('middlename')
+            +space
           span.surname= node.getAttribute('lastname')
         if ((node.isAttribute('position') || (node.isAttribute('organization'))))
           span.affiliation

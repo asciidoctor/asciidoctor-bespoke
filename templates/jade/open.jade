@@ -1,0 +1,5 @@
+if node.getRoles().length > 0
+  div(id=id class=node.getRoles())
+    !=node.getContent()
+else
+  !=node.getContent()
