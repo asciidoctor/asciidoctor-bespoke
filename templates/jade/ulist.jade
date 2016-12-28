@@ -1,2 +1,6 @@
 ul
-// TODO Implement ulist template
+  each _item in node.getBlocks()
+    li
+      span.primary!=_item['$text']()
+        if _item['$blocks?']()
+          !=_item['$content']()

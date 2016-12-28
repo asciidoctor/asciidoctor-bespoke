@@ -1,3 +1,10 @@
-- var _style = null
-section(id=_id style=_style data-title=(node.getAttribute('reftext')) data-bespoke-backdrop=(node.getAttribute('backdrop-role')))
+- var _bg_img_block = node.findBy({context: 'image', role: 'canvas'})[0]
+- var _bg_img = typeof _bg_img_block !== 'undefined' ? node.getImageURI(_bg_img_block.getAttribute('target')) : ''
+- var _bg_size = typeof _bg_img_block !== 'undefined' ? 'cover' : ''
+- var _class = typeof _bg_img_block !== 'undefined' ? 'image' : node.getRoles()
+- var _style = typeof _bg_img_block !== 'undefined' ? 'background-image: url(' + _bg_img + '); background-size: ' + _bg_size : '' // REMIND Interpolation doesn't work when using a variable
+
+section(id=_id class=_class style=_style data-title=(node.getAttribute('reftext')) data-bespoke-backdrop=(node.getAttribute('backdrop-role')))
+  if !node.getTitle().startsWith('!') && !node.isOption('conceal')
+    h2(class=node.isOption('fit') ? 'fit' : '')= node.getTitle()
   !=node.getContent()

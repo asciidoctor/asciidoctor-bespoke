@@ -1,1 +1,14 @@
-// TODO Implement listing template
+mixin listing
+  - var _lang = node.getAttribute('language')
+  if node.getStyle() === 'source'
+    pre.source(data-lang=_lang class="language-#{_lang} prettyprint")
+      !=node.getContent()
+  else
+    pre.code =node.getContent()
+
+if node.getTitle() !== ''
+  figure.listing
+    figcaption=node.getTitle()
+      +listing
+else
+  +listing

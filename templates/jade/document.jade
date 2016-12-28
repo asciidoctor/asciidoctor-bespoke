@@ -1,3 +1,4 @@
+- var _uri_scheme = node.getAttribute('asset-uri-scheme', 'https')
 doctype html
 html(lang=(node.isAttribute('nolang') ? '' : node.getAttribute('lang', 'en')))
   head
@@ -13,9 +14,11 @@ html(lang=(node.isAttribute('nolang') ? '' : node.getAttribute('lang', 'en')))
     if (node.getAttribute('appname'))
       meta(name='application-name' content=(node.getAttribute('appname')))
     link(rel='stylesheet', href='build/build.css')
-    if (node.getAttribute('icons', 'font'))
-      if (node.getAttribute('iconfont-remote'))
-        link(rel='stylesheet', href=(node.getAttribute('iconfont-cdn', cdn_uri + '/font-awesome/4.5.0/css/font-awesome.min.css')))
+    if (node.isAttribute('icons', 'font'))
+      if (node.isAttribute('iconfont-remote'))
+        link(rel='stylesheet', href=(node.getAttribute('iconfont-cdn', '#{_uri_scheme}://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css')))
+      else
+        link(rel='stylesheet', href=(node.normalizeWebPath('font-awesome.css', node.getAttribute('stylesdir', ''))))
   body(id=node.getId())
     article.deck
       unless (node.getNoheader())

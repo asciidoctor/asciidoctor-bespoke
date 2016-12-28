@@ -1,2 +1,22 @@
-figure.video
-// TODO Implement video template
+- var _uri_scheme = node.getAttribute('asset-uri-scheme', 'https')
+- var _rew = node.isOption('rewind') ? 'true' : 'false'
+- var _vol = node.isOption('muted') ? 0 : node.getAttribute('volume')
+- var _target = node.getAttribute('target')
+figure.video(class=node.getRole() id=node.getId())
+  case _service
+    when 'vimeo'
+      - var _src = "#{_uri_scheme}://player.vimeo.com/video/#{_target}"
+      iframe(src=_src width=node.getAttribute('width') height=node.getAttribute('height') frameborder=0
+      allowfullscreen=(node.isOption('nofullscreen') ? false : 'true') data-rewind=_rew data-volume=_vol)
+    when 'youtube'
+      //- var _params = ['enablejsapi=1', 'rel=0', 'showinfo=0', 'controls=0', 'disablekb=1']
+      - var _src = "#{_uri_scheme}://www.youtube.com/embed/#{_target}"
+      iframe(src=_src width=node.getAttribute('width') height=node.getAttribute('height') frameborder=0
+      allowfullscreen=(node.isOption('nofullscreen') ? false : 'true') data-rewind=_rew data-volume=_vol)
+    default
+      - var _poster = node.getAttribute('poster') !== '' ? '' : node.getMediaURI(node.getAttribute('poster'))
+      video(src=(node.getMediaURI(node.getAttribute('target'))) width=node.getAttribute('width') height=node.getAttribute('height') poster=_poster preload='auto'
+      controls=(node.isOption('controls') ? 'true': false) loop=(node.isOption('loop') ? 'true': false) data-rewind=_rew data-volume=_vol)
+        span.alt=node.getAttribute('alt', 'Your browser does not support the video element.')
+  if node.getTitle() !== ''
+    figcaption=node.getTitle()
