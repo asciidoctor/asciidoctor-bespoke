@@ -3,5 +3,5 @@ if node.hasRole('cue')
 else
   aside(id=node.getId() class=node.getRole())
     if node.getTitle() !== ''
-      h1=node.getTitle()
+      h1!=node.getTitle()
     !=node.getContent()
