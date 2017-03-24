@@ -9,7 +9,7 @@
 - _style = nil
 - if (_bg_img = pluck_first context: :image, role: 'canvas')
   - _style = %[background-image: url(#{image_uri _bg_img.attr(:target)}); background-size: #{(_bg_img.roles & %w[cover contain])[0] || 'cover'}; background-repeat: no-repeat]
-section id=_id class=[*_roles, ('image' if _bg_img)] style=_style data-title=(local_attr :reftext) data-bespoke-backdrop=(local_attr 'backdrop-role')
+section id=_id class=[*_roles, ('image' if _bg_img)] style=_style data-title=(local_attr :reftext) data-bespoke-backdrop=(local_attr 'backdrop-role') data-bespoke-hash=(local_attr :hash)
   - content_for :content
     - unless (_title.start_with? '!') || (option? :conceal)
       - if (_title_obj = partition_title _title).subtitle?
