@@ -348,6 +348,16 @@ A shorthand for the conceal option is to prefix the section title with a `!`.
 image::chart.svg[]
 ----
 
+You can also add a named hash to have a URL like `/#intro`
+instead of `/#3`
+
+.A slide with a named route
+[source,asciidoc]
+----
+[#intro]
+= Intro
+----
+
 Notice how we're keeping the concerns of content and presentation cleanly separated.
 Using very little AsciiDoc, you're able to describe a lot of different functionality.
 There doesn't even have to be a direct, literal mapping between the AsciiDoc and the HTML.
