@@ -348,10 +348,9 @@ A shorthand for the conceal option is to prefix the section title with a `!`.
 image::chart.svg[]
 ----
 
-You can also add a named hash to have a URL like `/#intro`
-instead of `/#3`
+You can also add a named hash to a slide so you get a URL like `/#intro` instead of `/#3`.
 
-.A slide with a named route
+.A slide with a named hash (aka named route)
 [source,asciidoc]
 ----
 [#intro]
