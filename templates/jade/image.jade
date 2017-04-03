@@ -6,10 +6,10 @@
 - var _reload = node.isOption('reload') ? 'true' : 'false'
 figure.image(id=node.getId(), class=[node.getRole(), node.isOption('flux') ? 'flux' : ''])
   if _format == 'svg'
-    object(type='image/svg+xml' data=(node.getImageURI(_target)) width=_width height=_height data-reload=_reload)
+    object(type='image/svg+xml' data=(node.getImageUri(_target)) width=_width height=_height data-reload=_reload)
       span.alt=_alt
   else
-      img(src=(node.getImageURI(_target)) alt=_alt width=_width height=_height data-reload=_reload)
+      img(src=(node.getImageUri(_target)) alt=_alt width=_width height=_height data-reload=_reload)
   if node.getTitle() !== ''
     figcaption=node.getTitle()
   if node.getAttribute('credit')

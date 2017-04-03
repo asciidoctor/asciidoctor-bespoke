@@ -4,5 +4,5 @@ section.speaker(id=_id class=(getRole()) data-title=(getAttribute('reftext')))
   header
     h2 =_author
   figure.image.headshot
-    img(src=(getImageURI(document.getAttribute('avatar'))) alt=_author)
+    img(src=(getImageUri(document.getAttribute('avatar'))) alt=_author)
   p.contact #{document.getAttribute('twitter')} | #{document.getAttribute('email')}

@@ -14,8 +14,8 @@ figure.video(class=node.getRole() id=node.getId())
       iframe(src=_src width=node.getAttribute('width') height=node.getAttribute('height') frameborder=0
       allowfullscreen=(node.isOption('nofullscreen') ? false : 'true') data-rewind=_rew data-volume=_vol)
     default
-      - var _poster = node.getAttribute('poster') !== '' ? '' : node.getMediaURI(node.getAttribute('poster'))
-      video(src=(node.getMediaURI(node.getAttribute('target'))) width=node.getAttribute('width') height=node.getAttribute('height') poster=_poster preload='auto'
+      - var _poster = node.getAttribute('poster') !== '' ? '' : node.getMediaUri(node.getAttribute('poster'))
+      video(src=(node.getMediaUri(node.getAttribute('target'))) width=node.getAttribute('width') height=node.getAttribute('height') poster=_poster preload='auto'
       controls=(node.isOption('controls') ? 'true': false) loop=(node.isOption('loop') ? 'true': false) data-rewind=_rew data-volume=_vol)
         span.alt=node.getAttribute('alt', 'Your browser does not support the video element.')
   if node.getTitle() !== ''
