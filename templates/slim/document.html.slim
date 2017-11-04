@@ -21,7 +21,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     link rel='stylesheet' href='build/build.css'
     - if attr? :icons, 'font'
       - if attr? 'iconfont-remote'
-        link rel='stylesheet' href=(attr 'iconfont-cdn', (cdn_uri 'font-awesome', '4.5.0', 'css/font-awesome.min.css'))
+        link rel='stylesheet' href=(attr 'iconfont-cdn', (cdn_uri 'font-awesome', '4.7.0', 'css/font-awesome.min.css'))
       - else
         link rel='stylesheet' href=(normalize_web_path 'font-awesome.css', (attr :stylesdir, ''))
     - case (_source_highlighter = attr 'source-highlighter')
