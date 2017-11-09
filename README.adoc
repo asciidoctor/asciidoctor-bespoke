@@ -676,6 +676,37 @@ Topic has the following benefits:
 
 To learn more about how to setup a presentation console, see the https://github.com/opendevise/bespoke-onstage[bespoke-onstage plugin].
 
+=== Supplemental Content
+
+It's possible to inject supplemental content into the output document using http://asciidoctor.org/docs/user-manual/#docinfo-file[docinfo files].
+This core feature of AsciiDoc has been adapted to work with the Bespoke converter.
+
+Currently, there are two insertion locations for docinfo content in a Bespoke document:
+
+head:: content is inserted after the the last child of the `<head>` element
+footer:: content is inserted after the last child of the `<article>` element
+
+The content you want to insert goes into a sibling file of the slide deck document with the following filename pattern:
+
+ docinfo-<location>-bespoke.html 
+
+For example, let's say you want to embed a tweet into your slide deck.
+You might inject the shared embedding JavaScript using a footer docinfo file:
+
+.src/docinfo-footer-bespoke.html
+[source,html]
+----
+<script src="https://platform.twitter.com/widgets.js"></script>
+----
+
+You then need to set the following document attribute in the AsciiDoc header:
+
+----
+:docinfo: shared
+----
+
+When this attribute is defined, the converter will automatically read the docinfo file(s) and insert the contents into the specified location in the output document.
+
 === Custom Transforms
 
 While conversion from AsciiDoc is meant to save you time producing common slide types, there are cases when you find yourself going against the grain or exceeding the limits of what CSS can handle.
