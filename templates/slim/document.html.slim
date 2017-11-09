@@ -34,9 +34,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
   body id=id
     article.deck
       - unless noheader
-        / TODO enable :header docinfo once Asciidoctor 1.5.5 is available
-        /- unless (_docinfo = docinfo :header, '-bespoke.html').empty?
-        /  =_docinfo
+        - unless (_docinfo = docinfo :header, '-bespoke.html').empty?
+          =_docinfo
         - if header?
           include slide_title.html.slim
       =content

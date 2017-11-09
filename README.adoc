@@ -681,10 +681,11 @@ To learn more about how to setup a presentation console, see the https://github.
 It's possible to inject supplemental content into the output document using http://asciidoctor.org/docs/user-manual/#docinfo-file[docinfo files].
 This core feature of AsciiDoc has been adapted to work with the Bespoke converter.
 
-Currently, there are two insertion locations for docinfo content in a Bespoke document:
+Currently, there are three insertion locations for docinfo content in a Bespoke document:
 
-head:: content is inserted after the the last child of the `<head>` element
-footer:: content is inserted after the last child of the `<article>` element
+head:: content is inserted after the last child of the `<head>` element
+header:: content is inserted before the first child of the `<article>` element (before the slides)
+footer:: content is inserted after the last child of the `<article>` element (after the slides)
 
 The content you want to insert goes into a sibling file of the slide deck document with the following filename pattern:
 
@@ -706,6 +707,11 @@ You then need to set the following document attribute in the AsciiDoc header:
 ----
 
 When this attribute is defined, the converter will automatically read the docinfo file(s) and insert the contents into the specified location in the output document.
+
+If you want to include content in every slide, we recommend using a http://asciidoctor.org/docs/user-manual/#extension-points[tree processor extension].
+The tree processor would first query for all the level-1 sections in the document (which get transformed into slides), then append one or more blocks to each of the matched sections.
+The tree processor could even read this content from a shared file.
+In the future, the converter may support docinfo insertions per slide.
 
 === Custom Transforms
 
