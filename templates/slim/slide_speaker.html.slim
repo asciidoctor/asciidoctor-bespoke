@@ -2,7 +2,7 @@
 - _id = (_id = id) && title == '!' && !(local_attr? :id) ? nil : _id
 - _editable = (option? :editable) ? 'true' : nil
 - _spellcheck = _editable ? 'false' : nil
-section.speaker id=_id class=role data-title=(local_attr 'reftext')
+section.speaker id=_id class=role data-title=(local_attr :reftext)
   header
     h2 contenteditable=_editable spellcheck=_spellcheck =_author
     h3 contenteditable=_editable spellcheck=_spellcheck =document.attr :position

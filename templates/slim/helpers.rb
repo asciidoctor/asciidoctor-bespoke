@@ -204,7 +204,7 @@ module Slim::Helpers
       end
       svg
     else
-      %(<span class="alt">#{local_attr 'alt'}</span>)
+      %(<span class="alt">#{local_attr :alt}</span>)
     end
   end
 
