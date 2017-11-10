@@ -1,6 +1,6 @@
 - _has_title = title?
 - content_for :ol
-  ol id=id class=[(style unless style == 'arabic'), ('fit' if (_fit = option? :fit)), *build_roles, role] reversed=('true' if option? :reversed)
+  ol id=(id unless _has_title) class=[(style unless style == 'arabic'), ('fit' if (_fit = option? :fit)), *build_roles, role] reversed=('true' if option? :reversed)
     - items.each do |_item|
       li class=('line' if _fit)
         span.primary=_item.text
