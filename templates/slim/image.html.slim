@@ -1,20 +1,25 @@
-- _target, _alt, _width, _height, _format, _reload = (local_attr :target), (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format), ('true' if option? :reload)
+- _target, _alt, _width, _height, _format, _link, _reload = (local_attr :target), (local_attr :alt), (local_attr :width), (local_attr :height), (local_attr :format), (local_attr :link), ('true' if option? :reload)
 / QUESTION support default image role?
 figure.image id=id class=[role, ('flux' if option? :flux)]
-  / TODO support link on image
-  / TODO append an index/counter to the alt attribute (since it is otherwise shared)
+  / TODO append an index/counter to the alt attribute (since it's otherwise shared)
   - _target.split(/[#,]/).each do |_target|
     =newline
-    - if _format == 'svg' || (_target.include? '.svg') && ((_svg = option? :inline) || (_obj = option? :interactive))
-      - case
-      - when _svg
-        =include_svg _target
-      - when _obj
-        object type='image/svg+xml' data=(image_uri _target) width=_width height=_height data-reload=_reload
-          / TODO support fallback option
-          span.alt=_alt
+    - content_for :img
+      - if _format == 'svg' || (_target.include? '.svg') && ((_svg = option? :inline) || (_obj = option? :interactive))
+        - case
+        - when _svg
+          =include_svg _target
+        - when _obj
+          object type='image/svg+xml' data=(image_uri _target) width=_width height=_height data-reload=_reload
+            / TODO support fallback option
+            span.alt=_alt
+      - else
+        img src=(image_uri _target) alt=_alt width=_width height=_height data-reload=_reload
+    - if _link
+      a.image href=_link
+        - yield_content :img
     - else
-      img src=(image_uri _target) alt=_alt width=_width height=_height data-reload=_reload
+      - yield_content :img
   - if title?
     =newline
     figcaption=title
