@@ -1,0 +1,19 @@
+sudo: false
+git:
+  depth: 2
+language: ruby
+bundler_args: --path=.bundle/gems
+cache: bundler
+rvm:
+- &release_ruby 2.4.1
+before_install:
+- gem update bundler
+- gem cleanup bundler
+script: bundle exec gem which asciidoctor-bespoke
+deploy:
+  provider: rubygems
+  api_key: ${RUBYGEMS_API_KEY}
+  on:
+    tags: true
+    repo: asciidoctor/asciidoctor-bespoke
+    rvm: *release_ruby
