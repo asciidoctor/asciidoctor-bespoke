@@ -1,9 +1,10 @@
 // NOTE if style is not set, then it's a literal paragraph (not a literal block)
 - _has_title = title?
+- _role = role
 - content_for :pre
-  pre.screen id=(id unless _has_title) class=role : samp =content
+  pre.screen id=(id unless _has_title) class=_role : samp =content
 - if _has_title
-  figure.listing id=id
+  figure.listing id=id class=_role
     figcaption=title
     - yield_content :pre
 - else
