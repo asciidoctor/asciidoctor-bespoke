@@ -4,10 +4,18 @@
   - if style == 'source' && (_lang = local_attr :language)
     / NOTE class attribute required for highlight.js and prettify
     / QUESTION should we add a "highlight" class to pre?
-    pre.source id=(id unless _has_title) class=_role : code data-lang=_lang class="language-#{_lang} prettyprint" =content
+    - _code_class = "language-#{_lang}"
+    - case (_source_highlighter = attr 'source-highlighter')
+    - when 'highlight.js'
+      - _pre_class = 'highlightjs'
+    - when 'prettify'
+      - _pre_class = 'prettyprint'
+    pre.source id=(id unless _has_title) class=[_role, _pre_class]
+      code data-lang=_lang class=_code_class =content
   - else
     / QUESTION should we add a class to pre?
     pre id=(id unless _has_title) class=_role : code =content
+
 - if _has_title
   figure.listing id=id class=_role
     figcaption=title
