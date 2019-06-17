@@ -28,9 +28,9 @@ module Bespoke
       template_opts = opts.merge htmlsyntax: 'html', template_engine: 'slim', template_engine_options: engine_opts
       template_converter = ::Asciidoctor::Converter::TemplateConverter.new backend, template_dirs, template_opts
       html5_converter = ::Asciidoctor::Converter::Html5Converter.new backend, opts
-      super backend, template_converter, html5_converter
-      basebackend 'html'
-      htmlsyntax 'html'
+      super 'html5', template_converter, html5_converter
+      backend_info
+      @backend = backend
     end
 
     def convert node, transform = nil, opts = {}
