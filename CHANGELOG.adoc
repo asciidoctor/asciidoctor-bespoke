@@ -34,7 +34,7 @@ Fixed::
 
 {url-repo}/releases/tag/v1.0.0-alpha.2[git tag] | {url-repo}/compare/v1.0.0.alpha.1\...v1.0.0-alpha.2[full diff]
 
-== 1.0.0.alpha.1 (2015-03-25) - @mojavelinux
+== 1.0.0-alpha.1 (2015-03-25) - @mojavelinux
 
 Initial release.
 
