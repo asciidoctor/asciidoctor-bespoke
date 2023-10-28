@@ -1,7 +1,5 @@
-begin
-  require 'bundler/gem_tasks'
-rescue LoadError => e
-  warn e.message
-end
+# frozen_string_literal: true
 
-task default: ['build']
+$default_tasks = [] # rubocop:disable Style/GlobalVars
+Dir.glob('tasks/*.rake').each {|file| load file }
+task default: $default_tasks unless $default_tasks.empty? # rubocop:disable Style/GlobalVars
