@@ -5,7 +5,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== Unreleased
+== 1.0.0-alpha.2 (2023-10-28) - @mojavelinux
 
 Added::
 
@@ -29,6 +29,10 @@ Fixed::
 
 * fix duplicate id when ordered list has title
 * set backend traits correctly (#20)
+
+=== Details
+
+{url-repo}/releases/tag/v1.0.0-alpha.2[git tag] | {url-repo}/compare/v1.0.0.alpha.1\...v1.0.0-alpha.2[full diff]
 
 == 1.0.0.alpha.1 (2015-03-25) - @mojavelinux
 

@@ -1,5 +1,6 @@
 = {project-name}
 Dan Allen <https://github.com/mojavelinux>
+v1.0.0-alpha.2, 2023-10-28
 // Settings:
 :idprefix:
 :idseparator: -
