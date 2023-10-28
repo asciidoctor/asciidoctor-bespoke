@@ -5,6 +5,31 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== Unreleased
+
+Added::
+
+* implement start attribute on ordered list (#12)
+* add support for link attribute on block image
+* allow use of custom role on listing block (#17)
+* include middle name in title slide if provided
+* read end time for video from end attribute
+* add support for named route hashes with bespoke-hash (#9)
+* report version of converter when running asciidoctor-bespoke -v
+* enable header insertion slot for docinfo
+
+Changed::
+
+* rename role for speaker notes to "notes"
+* replace jade with pug
+* upgrade Font Awesome to 4.7.0
+* upgrade highlight.js to 9.12.0
+
+Fixed::
+
+* fix duplicate id when ordered list has title
+* set backend traits correctly (#20)
+
 == 1.0.0.alpha.1 (2015-03-25) - @mojavelinux
 
 Initial release.
