@@ -861,7 +861,7 @@ Bespoke.js was created by https://github.com/markdalgleish[Mark Dalgleish] and h
 
 === Copyright
 
-Copyright (C) 2015-2018 Dan Allen and the Asciidoctor Project.
+Copyright (C) 2015-present Dan Allen and the Asciidoctor Project.
+Use of this software is granted under the terms of the MIT License.
 
-Free use of this software is granted under the terms of the MIT License.
-See the <<LICENSE#,LICENSE>> file for details.
+See the link:LICENCE[LICENSE] file for the full license text.

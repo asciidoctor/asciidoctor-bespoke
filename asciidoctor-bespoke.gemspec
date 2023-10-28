@@ -17,10 +17,10 @@ Gem::Specification.new do |s|
   rescue
     Dir['**/*']
   end
-  s.files = files.grep %r/^(?:(?:lib|templates)\/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$/
+  s.files = files.grep %r/^(?:(?:lib|templates)\/.+|Gemfile|Rakefile|LICENSE|(?:CHANGELOG|README)\.adoc|#{s.name}\.gemspec)$/
 
   s.executables = ['asciidoctor-bespoke']
-  s.extra_rdoc_files = ['CHANGELOG.adoc', 'LICENSE.adoc', 'README.adoc']
+  s.extra_rdoc_files = ['CHANGELOG.adoc', 'LICENSE', 'README.adoc']
   s.require_paths = ['lib']
 
   # QUESTION should asciidoctor be a runtime dependency?
