@@ -7,13 +7,8 @@ on:
         description: Enter version to release (e.g., 1.0.1).
         required: false
 jobs:
-  activate:
-    runs-on: ubuntu-latest
-    if: github.repository_owner == 'asciidoctor' && github.event_name == 'workflow_dispatch'
-    steps:
-    - run: echo ok go
   perform:
-    needs: activate
+    if: github.repository_owner == 'asciidoctor' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: releases
     steps:

@@ -40,10 +40,6 @@ chmod 600 $HOME/.gem/credentials
   git push origin $(git describe --tags --exact-match)
   gem push pkg/$RELEASE_GEM_NAME-$RELEASE_GEM_VERSION.gem
   git push origin $RELEASE_BRANCH
-  #sed -i 3d README.adoc
-  #sed -i "$(grep -m 1 -n '^== ' CHANGELOG.adoc | cut -f1 -d:)i == Unreleased\n\n_No changes since previous release._\n" CHANGELOG.adoc
-  #git commit -a -m 'begin development on next version [no ci]'
-  #git push origin $RELEASE_BRANCH
 )
 
 exit_code=$?
@@ -51,6 +47,7 @@ exit_code=$?
 # nuke gem credentials
 rm -rf $HOME/.gem
 
+# check for any uncommitted files
 git status -s -b
 
 exit $exit_code
