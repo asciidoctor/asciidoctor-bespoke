@@ -1,0 +1,122 @@
+= AsciiDoctor-bespokeJS Docker Image
+
+A Docker image to quickly start working with AsciiDoctor's bespoke JS
+backend, in a better "secured" way.
+
+== Why
+
+The idea is to have an improved User experience by leveraging
+the "sugar" steps needed before being able to write content.
+
+The few commands we have to run, the better it will be.
+
+Also, you'll improve your security without losing capabilities.
+The assets can be audited in a static way without having to
+download and accidentally run code like
+https://medium.freecodecamp.com/npm-package-hijacking-from-the-hijackers-perspective-af0c48ab9922[NPM does]
+
+Finally, we want to have "tested" assets, to ensure non-regression
+across future updates.
+
+== What
+
+We use a "standard" Docker workflow to create the image :
+
+1. https://docs.docker.com/engine/reference/builder/[Docker build]
+is used to create an image from your AsciiDoc-bespokejs project.
+Create a "Dockerfile" at the root of your project and just run :
+
+.Dockerfile
+[source,bash,subs=attributes+]
+----
+FROM dduportal/asciidoctor-bespokejs
+MAINTAINER you
+----
+
+[source,bash,subs=attributes+]
+----
+$ docker build -t my-awesome-slides ./
+... # Will copy your content into a pre-baked image
+----
+
+2. https://docs.docker.com/engine/reference/run/[Docker run command]
+is used to execute the container and generate or serve the content.
+[source,bash,subs=attributes+]
+----
+# Generate content and serve it with livereload
+$ docker run -d -p 8000:8000 -p 35729:35729 my-awesome-slides
+<CID>
+# Now open your browser to http://$(docker-machine ip):8000
+
+## To only generate content locally
+$ docker run --rm -ti my-awesome-slides build
+...
+----
+
+3. https://docs.docker.com/compose/overview/[Docker-Compose]
+can even be used to avoid typing complicating commands !
+
+.docker-compose.yml
+[source,yaml,subs=attributes+]
+----
+slides:
+  build: ./
+  ports:
+    - "8000:8000"
+    - "35729:35729"
+  volumes:
+    - ./src:/documents/src
+    # Add here shares depending on your use cases
+----
+.Dockerfile
+[source,bash,subs=attributes+]
+----
+FROM dduportal/asciidoctor-bespokejs
+MAINTAINER you
+----
+[source,bash,subs=attributes+]
+----
+$ docker-compose up
+...
+----
+
+
+== How
+
+* This image is aimed to provide a minimalistic Docker base,
+that will be specialized at will.
+
+* Linux Alpine is used to have a tiny footprint. The Dockerfile
+provides the whole recipe (installing ruby, npm, etc.)
+
+* We use the https://docs.docker.com/engine/reference/builder/#onbuild[ONBUILD]
+instruction to execute dependency resolution when user start the stack :
+  - Better lifecycle for the content and devDependencies
+  - Improved security by updating often
+
+* The base image contains the "bespoke-starter" project with some sugar
+to demonstrate how it works, and providing a base template to start with
+
+* Build and test are provided using https://github.com/sstephenson/bats[Bats],
+a Bash test framework that only require bash (it works even on Windows !).
+To run test suites, just install Bats and run it:
+[source,bash,subs=attributes+]
+----
+$ cd docker-img/
+$ bats test-image.bats
+ ✓ I can build the docker image
+ ✓ We have a ruby binary installed, in the PATH
+ ✓ Ruby bundler is installed and in the PATH
+ ✓ The image contains asciidoc in 1.5.4
+ ✓ asciidoctor is installed system-wide
+ ✓ We have NPM (and NodeJS by transitivity) installed, in the PATH
+ ✓ Gulp has been installed by NPM and is in the PATH
+ ✓ We can start the container in serve mode (default)
+ ✓ The HTTP server is reachable from outside and serve content
+ ✓ The livereload server is reachable from outside
+ ✓ I can build my own project image from this one
+ ✓ We can clean the testing environment
+
+12 tests, 0 failures
+
+----
